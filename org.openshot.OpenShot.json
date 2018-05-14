@@ -8,12 +8,19 @@
     "finish-args": [
         "--share=ipc",
         "--socket=x11",
-        "--device=all",
+        "--device=dri",
         "--share=network",
         "--filesystem=host",
         "--socket=pulseaudio",
         "--env=PYTHONPATH=/app/lib/python3/dist-packages",
-        "--env=LC_ALL=C"
+        "--env=LC_ALL=C" /* workaround to fix file import */
+    ],
+    "cleanup": [
+        "/include",
+        "/lib/pkgconfig",
+        "/share/cmake",
+        "/share/man",
+        "*.la"
     ],
     "modules": [
         {
@@ -21,7 +28,6 @@
             "buildsystem": "cmake-ninja",
             "builddir": true,
             "config-opts": [
-                "-DCMAKE_INSTALL_LIBDIR=lib",
                 "-DPORT=Qt",
                 "-DENABLE_API_TESTS=OFF",
                 "-DENABLE_INSPECTOR_UI=OFF",
@@ -34,7 +40,9 @@
                 "-DENABLE_VIDEO=OFF",
                 "-DENABLE_WEBKIT2=OFF",
                 "-DENABLE_WEB_AUDIO=OFF",
-                "-DUSE_GSTREAMER=OFF"
+                "-DUSE_GSTREAMER=OFF",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DCMAKE_INSTALL_LIBDIR=lib"
             ],
             "post-install": [
                 "mv /app/mkspecs /app/lib"
@@ -52,7 +60,7 @@
             "buildsystem": "simple",
             "build-commands": [
                 "python3 configure.py --bindir=/app/bin --destdir=/app/lib/python3/dist-packages --incdir=/app/include/python3 --sipdir=/app/share/sip --stubsdir=/app/lib/python3/dist-packages",
-                "make -j `nproc`",
+                "make -j $FLATPAK_BUILDER_N_JOBS",
                 "make install"
             ],
             "sources": [
@@ -68,8 +76,11 @@
             "buildsystem": "simple",
             "build-commands": [
                 "QMAKEPATH=/app/lib python3 configure.py PREFIX=/app --verbose --confirm-license --sip-incdir=/app/include/python3 --bindir=/app/bin --destdir=/app/lib/python3/dist-packages --designer-plugindir=/app/lib/plugins/designer --qml-plugindir=/app/lib/plugins/PyQt5 --sipdir=/app/share/sip --stubsdir=/app/lib/python3/dist-packages/PyQt5",
-                "make -j `nproc`",
+                "make -j $FLATPAK_BUILDER_N_JOBS",
                 "make install"
+            ],
+            "cleanup": [
+                "/bin"
             ],
             "sources": [
                 {
@@ -77,9 +88,6 @@
                     "url": "https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.9.2/PyQt5_gpl-5.9.2.tar.gz",
                     "sha256": "c190dac598c97b0113ca5e7a37c71c623f02d1d713088addfacac4acfa4b8394"
                 }
-            ],
-            "cleanup": [
-                "/bin"
             ]
         },
         {
@@ -118,15 +126,15 @@
                 "--without-boost",
                 "--without-pcre"
             ],
+            "cleanup": [
+                "*"
+            ],
             "sources": [
                 {
                     "type": "archive",
                     "url": "https://sourceforge.net/projects/swig/files/swig/swig-3.0.12/swig-3.0.12.tar.gz",
                     "sha256": "7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d"
                 }
-            ],
-            "cleanup": [
-                "*"
             ]
         },
         {
@@ -173,15 +181,15 @@
                 "--enable-avresample",
                 "--enable-libx264"
             ],
+            "cleanup": [
+                "/share/ffmpeg"
+            ],
             "sources": [
                 {
                     "type": "archive",
                     "url": "http://ffmpeg.org/releases/ffmpeg-3.0.11.tar.xz",
                     "sha256": "080202532ea926f1f5c0b68c806845df902527a4304a4547bdbafef28c6eb015"
                 }
-            ],
-            "cleanup": [
-                "/share/ffmpeg"
             ]
         },
         {
@@ -202,15 +210,15 @@
             "config-opts": [
                 "--disable-static"
             ],
+            "cleanup": [
+                "/share/doc"
+            ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://www.imagemagick.org/download/ImageMagick-6.9.9-41.tar.xz",
-                    "sha256": "35b52173c240f81654368a5c453614f572fcb44132531a8fa4538e2d304adfd3"
+                    "url": "http://http.debian.net/debian/pool/main/i/imagemagick/imagemagick_6.9.9.39+dfsg.orig.tar.xz",
+                    "sha256": "a8c2d67939938b7a45892090e154c84ef06e03f722ee9012f82f8b61c6454100"
                 }
-            ],
-            "cleanup": [
-                "/share/doc"
             ]
         },
         {
@@ -243,15 +251,15 @@
             "build-commands": [
                 "python3 setup.py install --prefix=/app"
             ],
+            "cleanup": [
+                "/bin"
+            ],
             "sources": [
                 {
                     "type": "archive",
                     "url": "https://pypi.python.org/packages/ee/2a/c4d2cdd19c84c32d978d18e9355d1ba9982a383de87d0fcb5928553d37f4/Cython-0.27.3.tar.gz",
                     "sha256": "6a00512de1f2e3ce66ba35c5420babaef1fe2d9c43a8faab4080b0dbcc26bc64"
                 }
-            ],
-            "cleanup": [
-                "/bin"
             ]
         },
         {
@@ -344,6 +352,14 @@
             "build-commands": [
                 "python3 setup.py install --prefix=/app --root=/"
             ],
+            "post-install": [
+                "mv /app/share/applications/openshot-qt.desktop /app/share/applications/org.openshot.OpenShot.desktop",
+                "desktop-file-edit --set-key=Icon --set-value='org.openshot.OpenShot' /app/share/applications/org.openshot.OpenShot.desktop",
+                "mv /app/share/mime/packages/openshot-qt.xml /app/share/mime/packages/org.openshot.OpenShot.xml",
+                "mkdir -p /app/share/icons/hicolor/scalable/apps",
+                "mv /app/share/pixmaps/openshot-qt.svg /app/share/icons/hicolor/scalable/apps/org.openshot.OpenShot.svg",
+                "install -Dm644 org.openshot.OpenShot.appdata.xml /app/share/appdata/org.openshot.OpenShot.appdata.xml"
+            ],
             "sources": [
                 {
                     "type": "archive",
@@ -354,22 +370,7 @@
                     "type": "file",
                     "path": "org.openshot.OpenShot.appdata.xml"
                 }
-            ],
-            "post-install": [
-                "mv /app/share/applications/openshot-qt.desktop /app/share/applications/org.openshot.OpenShot.desktop",
-                "desktop-file-edit --set-key=Icon --set-value='org.openshot.OpenShot' /app/share/applications/org.openshot.OpenShot.desktop",
-                "mv /app/share/mime/packages/openshot-qt.xml /app/share/mime/packages/org.openshot.OpenShot.xml",
-                "mkdir -p /app/share/icons/hicolor/scalable/apps",
-                "mv /app/share/pixmaps/openshot-qt.svg /app/share/icons/hicolor/scalable/apps/org.openshot.OpenShot.svg",
-                "install -Dm644 org.openshot.OpenShot.appdata.xml /app/share/appdata/org.openshot.OpenShot.appdata.xml"
             ]
         }
-    ],
-    "cleanup": [
-        "/include",
-        "/lib/pkgconfig",
-        "/share/cmake",
-        "/share/man",
-        "*.la"
     ]
 }
