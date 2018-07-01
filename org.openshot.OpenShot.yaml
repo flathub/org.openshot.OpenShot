@@ -51,16 +51,6 @@ modules:
         url: https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.9.2/PyQt5_gpl-5.9.2.tar.gz
         sha256: c190dac598c97b0113ca5e7a37c71c623f02d1d713088addfacac4acfa4b8394
 
-  - name: libopenshot-audio
-    buildsystem: cmake-ninja
-    builddir: true
-    config-opts:
-      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-    sources:
-      - type: archive
-        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.1.5.tar.gz
-        sha256: 366151ea971fa7d0734777068d40b333a3df83ca33233dc2cd630aeed40d2071
-
   - name: zeromq
     config-opts:
       - --disable-static
@@ -92,35 +82,6 @@ modules:
         url: https://github.com/zeromq/cppzmq/archive/v4.2.3.tar.gz
         sha256: 3e6b57bf49115f4ae893b1ff7848ead7267013087dc7be1ab27636a97144d373
 
-  - name: x264
-    config-opts:
-      - --disable-cli
-      - --enable-shared
-    sources:
-      - type: archive
-        url: https://download.videolan.org/x264/snapshots/x264-snapshot-20171223-2245-stable.tar.bz2
-        sha256: ee4ba2c3d1caf786ad66d3fa86bdc368a8f827318788a62a9c8444b2c35816bf
-
-  - name: ffmpeg
-    config-opts:
-      - --enable-gpl
-      - --disable-static
-      - --enable-shared
-      - --disable-doc
-      - --disable-programs
-      - --enable-libfontconfig
-      - --enable-libfreetype
-      - --enable-libopus
-      - --enable-libvpx
-      - --enable-avresample
-      - --enable-libx264
-    cleanup:
-      - /share/ffmpeg
-    sources:
-      - type: archive
-        url: http://ffmpeg.org/releases/ffmpeg-3.0.11.tar.xz
-        sha256: 080202532ea926f1f5c0b68c806845df902527a4304a4547bdbafef28c6eb015
-
   - name: unittest-cpp
     config-opts:
       - --disable-static
@@ -138,22 +99,6 @@ modules:
       - type: archive
         url: http://http.debian.net/debian/pool/main/i/imagemagick/imagemagick_6.9.9.39+dfsg.orig.tar.xz
         sha256: a8c2d67939938b7a45892090e154c84ef06e03f722ee9012f82f8b61c6454100
-
-  - name: libopenshot
-    buildsystem: cmake-ninja
-    builddir: true
-    config-opts:
-      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-      - -DLIBOPENSHOT_AUDIO_BASE_DIR=/app/include/libopenshot-audio
-      - -DUNITTEST++_INCLUDE_DIR=/app/include/UnitTest++
-      - -DENABLE_RUBY=0
-    sources:
-      - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v0.1.9.tar.gz
-        sha256: 2547969818092d77a1c742e27cf416b34b4d326abf6b089fc10b921f4a4141ec
-      - type: shell
-        commands:
-          - sed -i 's|${_REL_PYTHON_MODULE_PATH}|lib/python3/dist-packages|g' src/bindings/python/CMakeLists.txt
 
   - name: cython
     buildsystem: simple
@@ -220,6 +165,61 @@ modules:
         url: https://pypi.python.org/packages/f4/bd/0467d62790828c23c47fc1dfa1b1f052b24efdf5290f071c7a91d0d82fd3/idna-2.6.tar.gz
         sha256: 2c6a5de3089009e3da7c5dde64a141dbc8551d5b7f6cf4ed7c2568d0cc520a8f
 
+  - name: x264
+    config-opts:
+      - --disable-cli
+      - --enable-shared
+    sources:
+      - type: archive
+        url: https://download.videolan.org/x264/snapshots/x264-snapshot-20171223-2245-stable.tar.bz2
+        sha256: ee4ba2c3d1caf786ad66d3fa86bdc368a8f827318788a62a9c8444b2c35816bf
+
+  - name: ffmpeg
+    config-opts:
+      - --enable-gpl
+      - --disable-static
+      - --enable-shared
+      - --disable-doc
+      - --disable-programs
+      - --enable-libfontconfig
+      - --enable-libfreetype
+      - --enable-libopus
+      - --enable-libvpx
+      - --enable-avresample
+      - --enable-libx264
+    cleanup:
+      - /share/ffmpeg
+    sources:
+      - type: archive
+        url: http://ffmpeg.org/releases/ffmpeg-3.4.2.tar.xz
+        sha256: 2b92e9578ef8b3e49eeab229e69305f5f4cbc1fdaa22e927fc7fca18acccd740
+
+  - name: libopenshot-audio
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    sources:
+      - type: archive
+        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.1.6.tar.gz
+        sha256: 090ed62a59f35642081f6da58677e5f8f316ed2062cb47cf0617a71678b890c3
+
+  - name: libopenshot
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DLIBOPENSHOT_AUDIO_BASE_DIR=/app/include/libopenshot-audio
+      - -DUNITTEST++_INCLUDE_DIR=/app/include/UnitTest++
+      - -DENABLE_RUBY=0
+    sources:
+      - type: archive
+        url: https://github.com/OpenShot/libopenshot/archive/v0.2.0.tar.gz
+        sha256: f6f79c18023253720698c3049a0cd4b5783354cfbc6345e736e15268be6e297d
+      - type: shell
+        commands:
+          - sed -i 's|${_REL_PYTHON_MODULE_PATH}|lib/python3/dist-packages|g' src/bindings/python/CMakeLists.txt
+
   - name: openshot-qt
     buildsystem: simple
     build-commands:
@@ -233,9 +233,9 @@ modules:
       - mv /app/share/pixmaps/openshot-qt.svg /app/share/icons/hicolor/scalable/apps/org.openshot.OpenShot.svg
       - install -Dm644 org.openshot.OpenShot.appdata.xml /app/share/appdata/org.openshot.OpenShot.appdata.xml
     sources:
-      - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v2.4.1.tar.gz
-        sha256: da388c08cd94ec503a57756871244d9bb8746973807e2f95618a0d9d5e11fae9
       - type: file
         path: org.openshot.OpenShot.appdata.xml
+      - type: archive
+        url: https://github.com/OpenShot/openshot-qt/archive/v2.4.2.tar.gz
+        sha256: 957792cb5c07ec7c593b9af7d234f75110ac8df0aa179e284ed84f48f552d9bd
   

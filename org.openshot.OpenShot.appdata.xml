@@ -17,9 +17,6 @@
 			<image>https://www.openshot.org/static/img/gallery/title-editor.jpg</image>
 		</screenshot>
 	</screenshots>
-	<releases>
-		<release version="2.4.1" date="2017-11-12"/>
-  	</releases>
 	<content_rating type="oars-1.0">
 		<content_attribute id="violence-cartoon">none</content_attribute>
 		<content_attribute id="violence-fantasy">none</content_attribute>
@@ -42,4 +39,7 @@
 		<content_attribute id="money-purchasing">none</content_attribute>
 		<content_attribute id="money-gambling">none</content_attribute>
 	</content_rating>
+	<releases>
+		<release version="2.4.2" date="2018-06-30"/>
+	</releases>
 </component>
