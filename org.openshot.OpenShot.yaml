@@ -3,10 +3,11 @@ branch: stable
 base: io.qt.qtwebkit.BaseApp
 base-version: stable
 runtime: org.kde.Platform
-runtime-version: 5.9
+runtime-version: '5.9'
 sdk: org.kde.Sdk
 command: openshot-qt
 finish-args:
+  - --require-version=0.11.4 # fixes file saving
   - --share=ipc
   - --socket=x11
   - --device=dri
@@ -69,8 +70,10 @@ modules:
       - '*'
     sources:
       - type: archive
-        url: http://http.debian.net/debian/pool/main/s/swig/swig_3.0.12.orig.tar.gz
+        url: https://sourceforge.net/projects/swig/files/swig/swig-3.0.12/swig-3.0.12.tar.gz
         sha256: 7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d
+        mirror-urls:
+          - http://http.debian.net/debian/pool/main/s/swig/swig_3.0.12.orig.tar.gz
 
   - name: cppzmq
     buildsystem: cmake-ninja
@@ -97,8 +100,8 @@ modules:
       - /share/doc
     sources:
       - type: archive
-        url: http://http.debian.net/debian/pool/main/i/imagemagick/imagemagick_6.9.9.39+dfsg.orig.tar.xz
-        sha256: a8c2d67939938b7a45892090e154c84ef06e03f722ee9012f82f8b61c6454100
+        url: https://github.com/ImageMagick/ImageMagick6/archive/6.9.10-10.tar.gz
+        sha256: 65cf043521f93d8f35ea1e7a5f2b0277ad91c01f02c475b153939881891a9500
 
   - name: cython
     buildsystem: simple
@@ -191,8 +194,8 @@ modules:
       - /share/ffmpeg
     sources:
       - type: archive
-        url: http://ffmpeg.org/releases/ffmpeg-3.4.2.tar.xz
-        sha256: 2b92e9578ef8b3e49eeab229e69305f5f4cbc1fdaa22e927fc7fca18acccd740
+        url: http://ffmpeg.org/releases/ffmpeg-3.4.4.tar.xz
+        sha256: 386f7601e865df6bddde05bb6927119b5a853f0b92e2e9834f59c125a17d3fc6
 
   - name: libopenshot-audio
     buildsystem: cmake-ninja
