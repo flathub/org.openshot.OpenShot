@@ -1,9 +1,9 @@
 app-id: org.openshot.OpenShot
 branch: stable
 base: io.qt.qtwebkit.BaseApp
-base-version: '5.9'
+base-version: '5.11'
 runtime: org.kde.Platform
-runtime-version: '5.9'
+runtime-version: '5.11'
 sdk: org.kde.Sdk
 command: openshot-qt
 finish-args:
@@ -27,30 +27,44 @@ modules:
   - name: sip
     buildsystem: simple
     build-commands:
-      - python3 configure.py --bindir=/app/bin --destdir=/app/lib/python3/dist-packages
-        --incdir=/app/include/python3 --sipdir=/app/share/sip --stubsdir=/app/lib/python3/dist-packages
-      - make -j $FLATPAK_BUILDER_N_JOBS
-      - make install
-    sources:
-      - type: archive
-        url: https://sourceforge.net/projects/pyqt/files/sip/sip-4.19.6/sip-4.19.6.tar.gz
-        sha256: 9dda27ae181bea782ebc8768d29f22f85ab6e5128ee3ab21f491febad707925a
-  
-  - name: pyqt
-    buildsystem: simple
-    build-commands:
-      - QMAKEPATH=/app/lib python3 configure.py PREFIX=/app --verbose --confirm-license
-        --sip-incdir=/app/include/python3 --bindir=/app/bin --destdir=/app/lib/python3/dist-packages
-        --designer-plugindir=/app/lib/plugins/designer --qml-plugindir=/app/lib/plugins/PyQt5
-        --sipdir=/app/share/sip --stubsdir=/app/lib/python3/dist-packages/PyQt5
+      - python3 configure.py
+        --bindir=/app/bin
+        --destdir=/app/lib/python3/dist-packages
+        --incdir=/app/include/python3
+        --sipdir=/app/share/sip
+        --stubsdir=/app/lib/python3/dist-packages
+        --sip-module=PyQt5.sip
       - make -j $FLATPAK_BUILDER_N_JOBS
       - make install
     cleanup:
       - /bin
     sources:
       - type: archive
-        url: https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.9.2/PyQt5_gpl-5.9.2.tar.gz
-        sha256: c190dac598c97b0113ca5e7a37c71c623f02d1d713088addfacac4acfa4b8394
+        url: https://sourceforge.net/projects/pyqt/files/sip/sip-4.19.12/sip-4.19.12.tar.gz
+        sha256: 24617fc31b983df075500ecac0e99d2fb48bf63ba82d4a17518659e571923822
+  
+  - name: pyqt
+    buildsystem: simple
+    build-commands:
+      - QMAKEPATH=/app/lib python3 configure.py
+        --confirm-license
+        --sip-incdir=/app/include/python3
+        --bindir=/app/bin
+        --destdir=/app/lib/python3/dist-packages
+        --designer-plugindir=/app/lib/plugins/designer
+        --qml-plugindir=/app/lib/plugins/PyQt5
+        --sipdir=/app/share/sip
+        --stubsdir=/app/lib/python3/dist-packages/PyQt5
+      - make -j $FLATPAK_BUILDER_N_JOBS
+      - make install
+    cleanup:
+      - /bin
+    sources:
+      - type: archive
+        url: https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.11.2/PyQt5_gpl-5.11.2.tar.gz
+        sha256: 7caa581155c3433716b7e6aba71fe1378cd7d92f4155c266d60e5cffb64e9603
+      - type: patch
+        path: pyqt-5.11-sip-fix.patch
 
   - name: zeromq
     config-opts:
