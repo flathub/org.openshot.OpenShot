@@ -249,6 +249,7 @@ modules:
       - mv /app/share/mime/packages/openshot-qt.xml /app/share/mime/packages/org.openshot.OpenShot.xml
       - mkdir -p /app/share/icons/hicolor/scalable/apps
       - mv /app/share/pixmaps/openshot-qt.svg /app/share/icons/hicolor/scalable/apps
+      - sed -i 's|<id>openshot-qt</id>|<id>org.openshot.OpenShot</id>|' /app/share/metainfo/openshot-qt.appdata.xml
       - sed -i '72i <release version=\"2.4.3\" date=\"2018-09-22\"/>' /app/share/metainfo/openshot-qt.appdata.xml
     sources:
       - type: archive
