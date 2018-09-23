@@ -6,6 +6,9 @@ runtime: org.kde.Platform
 runtime-version: '5.11'
 sdk: org.kde.Sdk
 command: openshot-qt
+rename-icon: openshot-qt
+rename-desktop-file: openshot-qt.desktop
+rename-appdata-file: openshot-qt.appdata.xml
 finish-args:
   - --require-version=0.11.4 # fixes file saving
   - --share=ipc
@@ -208,8 +211,8 @@ modules:
       - /share/ffmpeg
     sources:
       - type: archive
-        url: http://ffmpeg.org/releases/ffmpeg-3.4.4.tar.xz
-        sha256: 386f7601e865df6bddde05bb6927119b5a853f0b92e2e9834f59c125a17d3fc6
+        url: https://ffmpeg.org/releases/ffmpeg-4.0.2.tar.xz
+        sha256: a95c0cc9eb990e94031d2183f2e6e444cc61c99f6f182d1575c433d62afb2f97
 
   - name: libopenshot-audio
     buildsystem: cmake-ninja
@@ -218,8 +221,8 @@ modules:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.1.6.tar.gz
-        sha256: 090ed62a59f35642081f6da58677e5f8f316ed2062cb47cf0617a71678b890c3
+        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.1.7.tar.gz
+        sha256: 3aa6dcfc5caaa409cfa63db206d3f6f7e25854642e796915e9ac8fdf9dbc9a3f
 
   - name: libopenshot
     buildsystem: cmake-ninja
@@ -231,8 +234,8 @@ modules:
       - -DENABLE_RUBY=0
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v0.2.0.tar.gz
-        sha256: f6f79c18023253720698c3049a0cd4b5783354cfbc6345e736e15268be6e297d
+        url: https://github.com/OpenShot/libopenshot/archive/v0.2.2.tar.gz
+        sha256: 3f92d42b9fdb66e62429a076678b1feae7de06751efc4217347a78282e86f0cc
       - type: shell
         commands:
           - sed -i 's|${_REL_PYTHON_MODULE_PATH}|lib/python3/dist-packages|g' src/bindings/python/CMakeLists.txt
@@ -240,19 +243,15 @@ modules:
   - name: openshot-qt
     buildsystem: simple
     build-commands:
-      - python3 setup.py install --prefix=/app --root=/
+      - PYTHONPATH=/app/lib/python3/dist-packages python3 setup.py install --prefix=/app --root=/
     post-install:
       - rm -rf /app/{include,lib/cmake,lib/mkspecs,lib/pkgconfig} # io.qt.qtwebkit.BaseApp
-      - mv /app/share/applications/openshot-qt.desktop /app/share/applications/org.openshot.OpenShot.desktop
-      - desktop-file-edit --set-key=Icon --set-value='org.openshot.OpenShot' /app/share/applications/org.openshot.OpenShot.desktop
       - mv /app/share/mime/packages/openshot-qt.xml /app/share/mime/packages/org.openshot.OpenShot.xml
       - mkdir -p /app/share/icons/hicolor/scalable/apps
-      - mv /app/share/pixmaps/openshot-qt.svg /app/share/icons/hicolor/scalable/apps/org.openshot.OpenShot.svg
-      - install -Dm644 org.openshot.OpenShot.appdata.xml /app/share/appdata/org.openshot.OpenShot.appdata.xml
+      - mv /app/share/pixmaps/openshot-qt.svg /app/share/icons/hicolor/scalable/apps
+      - sed -i '72i <release version=\"2.4.3\" date=\"2018-09-22\"/>' /app/share/metainfo/openshot-qt.appdata.xml
     sources:
-      - type: file
-        path: org.openshot.OpenShot.appdata.xml
       - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v2.4.2.tar.gz
-        sha256: 957792cb5c07ec7c593b9af7d234f75110ac8df0aa179e284ed84f48f552d9bd
+        url: https://github.com/OpenShot/openshot-qt/archive/v2.4.3.tar.gz
+        sha256: 901b485c28cfcbb4d1baf3cd6a30b165090c49c96f252236f1bbd8c8ab709721
   
