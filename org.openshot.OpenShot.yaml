@@ -18,7 +18,7 @@ finish-args:
   - --filesystem=host
   - --socket=pulseaudio
   - --env=PYTHONPATH=/app/lib/python3/dist-packages
-  - --env=LC_ALL=C # workaround to fix file import
+  - --env=LC_ALL=en_US.UTF-8 # workaround to fix file import
 cleanup:
   - /include
   - /lib/pkgconfig
@@ -182,8 +182,8 @@ modules:
       - python3 setup.py install --prefix=/app --root=/
     sources:
       - type: archive
-        url: https://pypi.python.org/packages/f4/bd/0467d62790828c23c47fc1dfa1b1f052b24efdf5290f071c7a91d0d82fd3/idna-2.6.tar.gz
-        sha256: 2c6a5de3089009e3da7c5dde64a141dbc8551d5b7f6cf4ed7c2568d0cc520a8f
+        url: https://files.pythonhosted.org/packages/65/c4/80f97e9c9628f3cac9b98bfca0402ede54e0563b56482e3e6e45c43c4935/idna-2.7.tar.gz
+        sha256: 684a38a6f903c1d71d6d5fac066b58d7768af4de2b832e426ec79c30daa94a16
 
   - name: x264
     config-opts:
