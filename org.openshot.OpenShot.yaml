@@ -18,7 +18,7 @@ finish-args:
   - --filesystem=host
   - --socket=pulseaudio
   - --env=PYTHONPATH=/app/lib/python3/dist-packages
-  - --env=LC_ALL=en_US.UTF-8 # workaround to fix file import
+  - --env=LC_ALL=en_US.UTF-8 # workaround to fix file import, TODO: try with python 3.7
 cleanup:
   - /include
   - /lib/pkgconfig
@@ -26,7 +26,10 @@ cleanup:
   - /share/man
   - '*.a'
   - '*.la'
+cleanup-commands: # https://github.com/flatpak/flatpak/issues/1082
+  - rm -rf /app/{include,lib/{cmake,mkspecs,pkgconfig}}
 modules:
+
   - name: sip
     buildsystem: simple
     build-commands:
@@ -43,8 +46,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://sourceforge.net/projects/pyqt/files/sip/sip-4.19.12/sip-4.19.12.tar.gz
-        sha256: 24617fc31b983df075500ecac0e99d2fb48bf63ba82d4a17518659e571923822
+        url: https://downloads.sourceforge.net/project/pyqt/sip/sip-4.19.13/sip-4.19.13.tar.gz
+        sha256: e353a7056599bf5fbd5d3ff9842a6ab2ea3cf4e0304a0f925ec5862907c0d15e
   
   - name: pyqt
     buildsystem: simple
@@ -64,14 +67,14 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.11.2/PyQt5_gpl-5.11.2.tar.gz
-        sha256: 7caa581155c3433716b7e6aba71fe1378cd7d92f4155c266d60e5cffb64e9603
-      - type: patch
-        path: pyqt-5.11-sip-fix.patch
+        url: https://downloads.sourceforge.net/project/pyqt/PyQt5/PyQt-5.11.3/PyQt5_gpl-5.11.3.tar.gz
+        sha256: c9b57d15601d436faf35dacf8e0acefa220194829a653e771e80b189b3261073
 
   - name: zeromq
     config-opts:
       - --disable-static
+    cleanup:
+      - /bin
     sources:
       - type: archive
         url: https://github.com/zeromq/libzmq/releases/download/v4.2.3/zeromq-4.2.3.tar.gz
@@ -87,7 +90,7 @@ modules:
       - '*'
     sources:
       - type: archive
-        url: https://sourceforge.net/projects/swig/files/swig/swig-3.0.12/swig-3.0.12.tar.gz
+        url: https://downloads.sourceforge.net/project/swig/swig/swig-3.0.12/swig-3.0.12.tar.gz
         sha256: 7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d
         mirror-urls:
           - http://http.debian.net/debian/pool/main/s/swig/swig_3.0.12.orig.tar.gz
@@ -105,20 +108,12 @@ modules:
   - name: unittest-cpp
     config-opts:
       - --disable-static
+    cleanup:
+      - '*'
     sources:
       - type: archive
         url: https://github.com/unittest-cpp/unittest-cpp/releases/download/v2.0.0/unittest-cpp-2.0.0.tar.gz
         sha256: 1d1b118518dc200e6b87bbf3ae7bfd00a0cfc6be708255f98e5e3d627a7c9f98
-
-  - name: imagemagick
-    config-opts:
-      - --disable-static
-    cleanup:
-      - /share/doc
-    sources:
-      - type: archive
-        url: https://github.com/ImageMagick/ImageMagick6/archive/6.9.10-10.tar.gz
-        sha256: 65cf043521f93d8f35ea1e7a5f2b0277ad91c01f02c475b153939881891a9500
 
   - name: cython
     buildsystem: simple
@@ -162,6 +157,8 @@ modules:
     buildsystem: simple
     build-commands:
       - python3 setup.py install --prefix=/app --root=/
+    cleanup:
+      - /bin
     sources:
       - type: archive
         url: https://pypi.python.org/packages/fc/bb/a5768c230f9ddb03acc9ef3f0d4a3cf93462473795d18e9535498c8f929d/chardet-3.0.4.tar.gz
@@ -185,7 +182,18 @@ modules:
         url: https://files.pythonhosted.org/packages/65/c4/80f97e9c9628f3cac9b98bfca0402ede54e0563b56482e3e6e45c43c4935/idna-2.7.tar.gz
         sha256: 684a38a6f903c1d71d6d5fac066b58d7768af4de2b832e426ec79c30daa94a16
 
-  - name: x264
+  - name: ImageMagick6
+    config-opts:
+      - --disable-static
+    cleanup:
+      - /bin
+      - /share/doc
+    sources:
+      - type: archive
+        url: https://github.com/ImageMagick/ImageMagick6/archive/6.9.10-21.tar.gz
+        sha256: 49307c8d1f847adb0e0e2ec2ce48a8d57e5eb9bf224ad630a8fa21afe49c233d
+
+  - name: 'x264'
     config-opts:
       - --disable-cli
       - --enable-shared
@@ -211,14 +219,16 @@ modules:
       - /share/ffmpeg
     sources:
       - type: archive
-        url: https://ffmpeg.org/releases/ffmpeg-4.0.2.tar.xz
-        sha256: a95c0cc9eb990e94031d2183f2e6e444cc61c99f6f182d1575c433d62afb2f97
+        url: https://ffmpeg.org/releases/ffmpeg-4.0.3.tar.xz
+        sha256: 253c37e3f1d3626a2566e496554de9a4c29050753660835909a466d66b12e2ed
 
   - name: libopenshot-audio
     buildsystem: cmake-ninja
     builddir: true
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    cleanup:
+      - /bin
     sources:
       - type: archive
         url: https://github.com/OpenShot/libopenshot-audio/archive/v0.1.7.tar.gz
@@ -245,7 +255,6 @@ modules:
     build-commands:
       - PYTHONPATH=/app/lib/python3/dist-packages python3 setup.py install --prefix=/app --root=/
     post-install:
-      - rm -rf /app/{include,lib/cmake,lib/mkspecs,lib/pkgconfig} # io.qt.qtwebkit.BaseApp
       - mv /app/share/mime/packages/openshot-qt.xml /app/share/mime/packages/org.openshot.OpenShot.xml
       - mkdir -p /app/share/icons/hicolor/scalable/apps
       - mv /app/share/pixmaps/openshot-qt.svg /app/share/icons/hicolor/scalable/apps
