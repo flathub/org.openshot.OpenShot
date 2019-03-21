@@ -5,6 +5,8 @@ base-version: '5.12'
 runtime: org.kde.Platform
 runtime-version: '5.12'
 sdk: org.kde.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
 command: openshot-qt
 rename-icon: openshot-qt
 rename-desktop-file: openshot-qt.desktop
@@ -18,6 +20,8 @@ finish-args:
   - --filesystem=host
   - --socket=pulseaudio
   - --env=PYTHONPATH=/app/lib/python3/dist-packages
+build-options:
+  append-path: /usr/lib/sdk/rust-stable/bin
 cleanup:
   - /include
   - /lib/pkgconfig
@@ -45,8 +49,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://www.riverbankcomputing.com/static/Downloads/sip/sip-4.19.14.tar.gz
-        sha256: 0ef3765dbcc3b8131f83e60239f49508f82205b33cae5408c405e2e2f2d0af87
+        url: https://www.riverbankcomputing.com/static/Downloads/sip/sip-4.19.15.tar.gz
+        sha256: 2b5c0b2c0266b467b365c21376d50dde61a3236722ab87ff1e8dacec283eb610
   
   - name: pyqt
     buildsystem: simple
@@ -66,8 +70,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5_gpl-5.12.tar.gz
-        sha256: d9e70065b5980afde5f2b9bc900910050331604e02c70666c45fcfc66b0d4f34
+        url: https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5_gpl-5.12.1.tar.gz
+        sha256: 3718ce847d824090fd5f95ff3f13847ee75c2507368d4cbaeb48338f506e59bf
 
   - name: zeromq
     config-opts:
@@ -192,6 +196,17 @@ modules:
         url: https://github.com/ImageMagick/ImageMagick6/archive/6.9.10-21.tar.gz
         sha256: 49307c8d1f847adb0e0e2ec2ce48a8d57e5eb9bf224ad630a8fa21afe49c233d
 
+  - name: resvg
+    buildsystem: simple
+    build-commands:
+      - cargo build --verbose --release --frozen --manifest-path capi/Cargo.toml --features "qt-backend"
+      - install -Dm644 target/release/libresvg.so -t /app/lib
+      - install -Dm644 capi/include/*.h -t /app/include/resvg
+    sources:
+      - type: archive
+        url: https://github.com/RazrFalcon/resvg/releases/download/v0.6.1/resvg-0.6.1.tar.xz
+        sha256: 7206f79f67b4c8610353134c375ed3ff9c5eb63b16fae267b94730c23ebe4ee1
+
   - name: 'x264'
     config-opts:
       - --disable-cli
@@ -230,8 +245,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.1.7.tar.gz
-        sha256: 3aa6dcfc5caaa409cfa63db206d3f6f7e25854642e796915e9ac8fdf9dbc9a3f
+        url: https://github.com/OpenShot/libopenshot-audio/archive/v2.4.4.tar.gz
+        sha256: 7df68f1f02f519debf2b4b208b1c28ba3032e1600c6453518b0a4e5fe5bc2483
 
   - name: libopenshot
     buildsystem: cmake-ninja
@@ -241,10 +256,11 @@ modules:
       - -DLIBOPENSHOT_AUDIO_BASE_DIR=/app/include/libopenshot-audio
       - -DUNITTEST++_INCLUDE_DIR=/app/include/UnitTest++
       - -DENABLE_RUBY=0
+      - -DRESVG_INCLUDE_DIR=/app/include/resvg
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v0.2.2.tar.gz
-        sha256: 3f92d42b9fdb66e62429a076678b1feae7de06751efc4217347a78282e86f0cc
+        url: https://github.com/OpenShot/libopenshot/archive/v2.4.4.tar.gz
+        sha256: d715d786e469860785b4f50df09b5f2b477310fd73f80f5c9e87628119b74bbd
       - type: shell
         commands:
           - sed -i 's|${_REL_PYTHON_MODULE_PATH}|lib/python3/dist-packages|g' src/bindings/python/CMakeLists.txt
@@ -253,14 +269,13 @@ modules:
     buildsystem: simple
     build-commands:
       - PYTHONPATH=/app/lib/python3/dist-packages python3 setup.py install --prefix=/app --root=/
-    post-install:
-      - mv /app/share/mime/packages/openshot-qt.xml /app/share/mime/packages/org.openshot.OpenShot.xml
+      - mv /app/share/mime/packages/{openshot-qt.xml,org.openshot.OpenShot.xml}
       - mkdir -p /app/share/icons/hicolor/scalable/apps
       - mv /app/share/pixmaps/openshot-qt.svg /app/share/icons/hicolor/scalable/apps
       - sed -i 's|<id>openshot-qt</id>|<id>org.openshot.OpenShot</id>|' /app/share/metainfo/openshot-qt.appdata.xml
-      - sed -i '72i <release version=\"2.4.3\" date=\"2018-09-22\"/>' /app/share/metainfo/openshot-qt.appdata.xml
+      - sed -i '72i <release version=\"2.4.4\" date=\"2019-03-20\"/>' /app/share/metainfo/openshot-qt.appdata.xml
     sources:
       - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v2.4.3.tar.gz
-        sha256: 901b485c28cfcbb4d1baf3cd6a30b165090c49c96f252236f1bbd8c8ab709721
+        url: https://github.com/OpenShot/openshot-qt/archive/v2.4.4.tar.gz
+        sha256: 8197923b3fff2010ee69c75469818543674a12fcb8fcb08944471e4ead3426be
   
