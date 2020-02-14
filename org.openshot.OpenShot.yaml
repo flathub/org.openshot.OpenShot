@@ -1,9 +1,9 @@
 app-id: org.openshot.OpenShot
 branch: stable
 base: io.qt.qtwebkit.BaseApp
-base-version: '5.12'
+base-version: '5.13'
 runtime: org.kde.Platform
-runtime-version: '5.12'
+runtime-version: '5.13'
 sdk: org.kde.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
@@ -68,8 +68,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://www.riverbankcomputing.com/static/Downloads/PyQt5/5.12.1/PyQt5_gpl-5.12.1.tar.gz
-        sha256: 3718ce847d824090fd5f95ff3f13847ee75c2507368d4cbaeb48338f506e59bf
+        url: https://www.riverbankcomputing.com/static/Downloads/PyQt5/5.13.2/PyQt5-5.13.2.tar.gz
+        sha256: adc17c077bf233987b8e43ada87d1e0deca9bd71a13e5fd5fc377482ed69c827
 
   - name: zeromq
     config-opts:
