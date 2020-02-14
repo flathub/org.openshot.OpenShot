@@ -31,6 +31,14 @@ cleanup-commands: # https://github.com/flatpak/flatpak/issues/1082
   - rm -rf /app/{include,lib/{cmake,mkspecs,pkgconfig}}
 modules:
 
+  - name: dbus-python
+    config-opts:
+      - PYTHON_VERSION=3
+    sources:
+      - type: archive
+        url: https://dbus.freedesktop.org/releases/dbus-python/dbus-python-1.2.16.tar.gz
+        sha256: 11238f1d86c995d8aed2e22f04a1e3779f0d70e587caffeab4857f3c662ed5a4
+
   - name: sip
     buildsystem: simple
     build-commands:
