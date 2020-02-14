@@ -31,14 +31,6 @@ cleanup-commands: # https://github.com/flatpak/flatpak/issues/1082
   - rm -rf /app/{include,lib/{cmake,mkspecs,pkgconfig}}
 modules:
 
-  - name: dbus-python
-    config-opts:
-      - PYTHON_VERSION=3
-    sources:
-      - type: archive
-        url: https://dbus.freedesktop.org/releases/dbus-python/dbus-python-1.2.16.tar.gz
-        sha256: 11238f1d86c995d8aed2e22f04a1e3779f0d70e587caffeab4857f3c662ed5a4
-
   - name: sip
     buildsystem: simple
     build-commands:
@@ -76,8 +68,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://www.riverbankcomputing.com/static/Downloads/PyQt5/5.12.3/PyQt5_gpl-5.12.3.tar.gz
-        sha256: 0db0fa37debab147450f9e052286f7a530404e2aaddc438e97a7dcdf56292110
+        url: https://www.riverbankcomputing.com/static/Downloads/PyQt5/5.12.2/PyQt5_gpl-5.12.2.tar.gz
+        sha256: c565829e77dc9c281aa1a0cdf2eddaead4e0f844cbaf7a4408441967f03f5f0f
 
   - name: zeromq
     config-opts:
