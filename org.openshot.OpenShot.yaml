@@ -9,8 +9,6 @@ sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
 command: openshot-qt
 rename-icon: openshot-qt
-rename-desktop-file: openshot-qt.desktop
-rename-appdata-file: openshot-qt.appdata.xml
 finish-args:
   - --require-version=0.11.4 # fixes file saving
   - --share=ipc
@@ -49,8 +47,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://www.riverbankcomputing.com/static/Downloads/sip/sip-4.19.15.tar.gz
-        sha256: 2b5c0b2c0266b467b365c21376d50dde61a3236722ab87ff1e8dacec283eb610
+        url: https://www.riverbankcomputing.com/static/Downloads/sip/4.19.21/sip-4.19.21.tar.gz
+        sha256: 6af9979ab41590e8311b8cc94356718429ef96ba0e3592bdd630da01211200ae
   
   - name: pyqt
     buildsystem: simple
@@ -70,8 +68,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5_gpl-5.12.1.tar.gz
-        sha256: 3718ce847d824090fd5f95ff3f13847ee75c2507368d4cbaeb48338f506e59bf
+        url: https://www.riverbankcomputing.com/static/Downloads/PyQt5/5.12.3/PyQt5_gpl-5.12.3.tar.gz
+        sha256: 0db0fa37debab147450f9e052286f7a530404e2aaddc438e97a7dcdf56292110
 
   - name: zeromq
     config-opts:
@@ -204,8 +202,8 @@ modules:
       - install -Dm644 capi/include/*.h -t /app/include/resvg
     sources:
       - type: archive
-        url: https://github.com/RazrFalcon/resvg/releases/download/v0.6.1/resvg-0.6.1.tar.xz
-        sha256: 7206f79f67b4c8610353134c375ed3ff9c5eb63b16fae267b94730c23ebe4ee1
+        url: https://github.com/RazrFalcon/resvg/releases/download/v0.9.0/resvg-0.9.0.tar.xz
+        sha256: 669ac4fa4e63b8540f1a8c849f747db25bf870c07ccf0830de4f24209d0e017e
 
   - name: 'x264'
     config-opts:
@@ -245,8 +243,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot-audio/archive/v2.4.4.tar.gz
-        sha256: 7df68f1f02f519debf2b4b208b1c28ba3032e1600c6453518b0a4e5fe5bc2483
+        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.1.9.tar.gz
+        sha256: 818708988758a6bdf625472f6b420c42cca2df73362ef0566006cf7af983da96
 
   - name: libopenshot
     buildsystem: cmake-ninja
@@ -259,8 +257,8 @@ modules:
       - -DRESVG_INCLUDE_DIR=/app/include/resvg
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v2.4.4.tar.gz
-        sha256: d715d786e469860785b4f50df09b5f2b477310fd73f80f5c9e87628119b74bbd
+        url: https://github.com/OpenShot/libopenshot/archive/v0.2.4.tar.gz
+        sha256: 173a33b90c03066025ecd0272fd2d4e3beec63cc51a05b858fa8672186ac7545
       - type: shell
         commands:
           - sed -i 's|${_REL_PYTHON_MODULE_PATH}|lib/python3/dist-packages|g' src/bindings/python/CMakeLists.txt
@@ -269,13 +267,8 @@ modules:
     buildsystem: simple
     build-commands:
       - PYTHONPATH=/app/lib/python3/dist-packages python3 setup.py install --prefix=/app --root=/
-      - mv /app/share/mime/packages/{openshot-qt.xml,org.openshot.OpenShot.xml}
-      - mkdir -p /app/share/icons/hicolor/scalable/apps
-      - mv /app/share/pixmaps/openshot-qt.svg /app/share/icons/hicolor/scalable/apps
-      - sed -i 's|<id>openshot-qt</id>|<id>org.openshot.OpenShot</id>|' /app/share/metainfo/openshot-qt.appdata.xml
-      - sed -i '72i <release version=\"2.4.4\" date=\"2019-03-20\"/>' /app/share/metainfo/openshot-qt.appdata.xml
     sources:
       - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v2.4.4.tar.gz
-        sha256: 8197923b3fff2010ee69c75469818543674a12fcb8fcb08944471e4ead3426be
+        url: https://github.com/OpenShot/openshot-qt/archive/v2.5.0.tar.gz
+        sha256: b48d2d924d9124a61d5053b2c04b2f083f16fd86395f0e0f231082d34ff0521f
   
