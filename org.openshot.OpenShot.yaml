@@ -1,5 +1,5 @@
 app-id: org.openshot.OpenShot
-branch: stable
+default-branch: stable
 base: io.qt.qtwebkit.BaseApp
 base-version: '5.13'
 runtime: org.kde.Platform
@@ -72,14 +72,16 @@ modules:
         sha256: adc17c077bf233987b8e43ada87d1e0deca9bd71a13e5fd5fc377482ed69c827
 
   - name: zeromq
+    buildsystem: cmake-ninja
+    builddir: true
     config-opts:
-      - --disable-static
+      - -DCMAKE_BUILD_TYPE=Release
     cleanup:
       - /bin
     sources:
       - type: archive
-        url: https://github.com/zeromq/libzmq/releases/download/v4.2.3/zeromq-4.2.3.tar.gz
-        sha256: 8f1e2b2aade4dbfde98d82366d61baef2f62e812530160d2e6d0a5bb24e40bc0
+        url: https://github.com/zeromq/libzmq/releases/download/v4.3.2/zeromq-4.3.2.tar.gz
+        sha256: ebd7b5c830d6428956b67a0454a7f8cbed1de74b3b01e5c33c5378e22740f763
 
   - name: swig
     config-opts:
@@ -101,10 +103,11 @@ modules:
     builddir: true
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
+      - -DCPPZMQ_BUILD_TESTS=OFF
     sources:
       - type: archive
-        url: https://github.com/zeromq/cppzmq/archive/v4.2.3.tar.gz
-        sha256: 3e6b57bf49115f4ae893b1ff7848ead7267013087dc7be1ab27636a97144d373
+        url: https://github.com/zeromq/cppzmq/archive/v4.6.0.tar.gz
+        sha256: e9203391a0b913576153a2ad22a2dc1479b1ec325beb6c46a3237c669aef5a52
 
   - name: unittest-cpp
     config-opts:
@@ -202,8 +205,8 @@ modules:
       - install -Dm644 capi/include/*.h -t /app/include/resvg
     sources:
       - type: archive
-        url: https://github.com/RazrFalcon/resvg/releases/download/v0.9.0/resvg-0.9.0.tar.xz
-        sha256: 669ac4fa4e63b8540f1a8c849f747db25bf870c07ccf0830de4f24209d0e017e
+        url: https://github.com/RazrFalcon/resvg/releases/download/v0.6.1/resvg-0.6.1.tar.xz
+        sha256: 7206f79f67b4c8610353134c375ed3ff9c5eb63b16fae267b94730c23ebe4ee1
 
   - name: 'x264'
     config-opts:
@@ -211,8 +214,20 @@ modules:
       - --enable-shared
     sources:
       - type: archive
-        url: https://download.videolan.org/x264/snapshots/x264-snapshot-20180807-2245-stable.tar.bz2
-        sha256: 1439f1a054c87965089b646e77d16e1a8bf2f9687e4dd696ac518e44c7644c2a
+        url: https://download.videolan.org/x264/snapshots/x264-snapshot-20190305-2245-stable.tar.bz2
+        sha256: be52c96ef8bd930fbc1ecff03abac9b94976b444ea7641345e08e20d9e594d16
+
+  - name: nv-codec-headers
+    no-autogen: true
+    make-install-args:
+      - PREFIX=/app
+    cleanup:
+      - '*'
+    sources:
+      - type: git
+        url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
+        commit: 9fdaf11b8f79d4e41cde9af89656238f25fec6fd
+        tag: n9.0.18.2
 
   - name: ffmpeg
     config-opts:
@@ -231,8 +246,8 @@ modules:
       - /share/ffmpeg
     sources:
       - type: archive
-        url: https://ffmpeg.org/releases/ffmpeg-4.0.3.tar.xz
-        sha256: 253c37e3f1d3626a2566e496554de9a4c29050753660835909a466d66b12e2ed
+        url: https://www.ffmpeg.org/releases/ffmpeg-4.2.2.tar.xz
+        sha256: cb754255ab0ee2ea5f66f8850e1bd6ad5cac1cd855d0a2f4990fb8c668b0d29c
 
   - name: libopenshot-audio
     buildsystem: cmake-ninja
