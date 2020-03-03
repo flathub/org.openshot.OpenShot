@@ -186,7 +186,7 @@ modules:
         url: https://files.pythonhosted.org/packages/65/c4/80f97e9c9628f3cac9b98bfca0402ede54e0563b56482e3e6e45c43c4935/idna-2.7.tar.gz
         sha256: 684a38a6f903c1d71d6d5fac066b58d7768af4de2b832e426ec79c30daa94a16
 
-  - name: ImageMagick6
+  - name: ImageMagick
     config-opts:
       - --disable-static
     cleanup:
@@ -194,8 +194,8 @@ modules:
       - /share/doc
     sources:
       - type: archive
-        url: https://github.com/ImageMagick/ImageMagick6/archive/6.9.10-21.tar.gz
-        sha256: 49307c8d1f847adb0e0e2ec2ce48a8d57e5eb9bf224ad630a8fa21afe49c233d
+        url: https://imagemagick.org/download/releases/ImageMagick-7.0.9-27.tar.xz
+        sha256: 0589b567dfc14390a81858feabff06b974162690660cc02893cbe9713b59db1c
 
   - name: resvg
     buildsystem: simple
@@ -226,8 +226,8 @@ modules:
     sources:
       - type: git
         url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
-        commit: 9fdaf11b8f79d4e41cde9af89656238f25fec6fd
-        tag: n9.0.18.2
+        commit: 4a0bbfd58724d6d19851cd8a6f7a9098dde9ab77
+        tag: n9.1.23.1
 
   - name: ffmpeg
     config-opts:
@@ -258,8 +258,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.1.9.tar.gz
-        sha256: 818708988758a6bdf625472f6b420c42cca2df73362ef0566006cf7af983da96
+        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.2.0.tar.gz
+        sha256: 937ff4f1c2dfb8ab5d56ad85beacaa29dfd5a79af0d9cf647386034fe9882309
 
   - name: libopenshot
     buildsystem: cmake-ninja
@@ -272,8 +272,8 @@ modules:
       - -DRESVG_INCLUDE_DIR=/app/include/resvg
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v0.2.4.tar.gz
-        sha256: 173a33b90c03066025ecd0272fd2d4e3beec63cc51a05b858fa8672186ac7545
+        url: https://github.com/OpenShot/libopenshot/archive/v0.2.5.tar.gz
+        sha256: 8ae7d226fbd2efbc84da4f7d9d8c7f3cc9616e4de46e1233e3b0a84ac0a429bc
       - type: shell
         commands:
           - sed -i 's|${_REL_PYTHON_MODULE_PATH}|lib/python3/dist-packages|g' src/bindings/python/CMakeLists.txt
@@ -284,6 +284,6 @@ modules:
       - PYTHONPATH=/app/lib/python3/dist-packages python3 setup.py install --prefix=/app --root=/
     sources:
       - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v2.5.0.tar.gz
-        sha256: b48d2d924d9124a61d5053b2c04b2f083f16fd86395f0e0f231082d34ff0521f
+        url: https://github.com/OpenShot/openshot-qt/archive/v2.5.1.tar.gz
+        sha256: 4c25eb9a5de42e749de4c6ca2f7a313c60e1283fe52d70c121629dbb8bb2df7b
   
