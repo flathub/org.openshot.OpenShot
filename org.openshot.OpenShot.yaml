@@ -205,8 +205,8 @@ modules:
       - install -Dm644 capi/include/*.h -t /app/include/resvg
     sources:
       - type: archive
-        url: https://github.com/RazrFalcon/resvg/releases/download/v0.6.1/resvg-0.6.1.tar.xz
-        sha256: 7206f79f67b4c8610353134c375ed3ff9c5eb63b16fae267b94730c23ebe4ee1
+        url: https://github.com/RazrFalcon/resvg/releases/download/v0.9.0/resvg-0.9.0.tar.xz
+        sha256: a2ecb02ffbb55b440246d3ba0cd0c42cfac5da92c867bc49c629c1276a9d6a49
 
   - name: 'x264'
     config-opts:
