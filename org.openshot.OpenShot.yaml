@@ -206,7 +206,7 @@ modules:
     sources:
       - type: archive
         url: https://github.com/RazrFalcon/resvg/releases/download/v0.9.0/resvg-0.9.0.tar.xz
-        sha256: a2ecb02ffbb55b440246d3ba0cd0c42cfac5da92c867bc49c629c1276a9d6a49
+        sha256: e06193d7f12f525ed59c9d24b4fe6a9f764ce302a32f708f20c4c7fa8dea7719
 
   - name: 'x264'
     config-opts:
