@@ -5,8 +5,6 @@ base-version: '5.14'
 runtime: org.kde.Platform
 runtime-version: '5.14'
 sdk: org.kde.Sdk
-sdk-extensions:
-  - org.freedesktop.Sdk.Extension.rust-stable
 command: openshot-qt
 rename-icon: openshot-qt
 finish-args:
@@ -17,7 +15,9 @@ finish-args:
   - --share=network
   - --filesystem=host
   - --socket=pulseaudio
-  - --env=PYTHONPATH=/app/lib/python3/dist-packages
+  - --talk-name=org.freedesktop.Flatpak
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
 build-options:
   append-path: /usr/lib/sdk/rust-stable/bin
 cleanup:
@@ -31,45 +31,73 @@ cleanup-commands: # https://github.com/flatpak/flatpak/issues/1082
   - rm -rf /app/{include,lib/{cmake,mkspecs,pkgconfig}}
 modules:
 
+  - name: toml
+    buildsystem: simple
+    build-commands:
+      - python3 setup.py install --prefix=/app --root=/
+    sources:
+      - type: archive
+        url: https://files.pythonhosted.org/packages/b9/19/5cbd78eac8b1783671c40e34bb0fa83133a06d340a38b55c645076d40094/toml-0.10.0.tar.gz
+        sha256: 229f81c57791a41d65e399fc06bf0848bab550a9dfd5ed66df18ce5f05e73d5c
+
+  - name: packaging
+    buildsystem: simple
+    build-commands:
+      - python3 setup.py install --prefix=/app --root=/
+    sources:
+      - type: archive
+        url: https://files.pythonhosted.org/packages/65/37/83e3f492eb52d771e2820e88105f605335553fe10422cba9d256faeb1702/packaging-20.3.tar.gz
+        sha256: 3c292b474fda1671ec57d46d739d072bfd495a4f51ad01a055121d81e952b7a3
+
+  - name: pyparsing
+    buildsystem: simple
+    build-commands:
+      - python3 setup.py install --prefix=/app --root=/
+    sources:
+      - type: archive
+        url: https://files.pythonhosted.org/packages/c1/47/dfc9c342c9842bbe0036c7f763d2d6686bcf5eb1808ba3e170afdb282210/pyparsing-2.4.7.tar.gz
+        sha256: c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1
+
   - name: sip
     buildsystem: simple
     build-commands:
-      - python3 configure.py
-        --bindir=/app/bin
-        --destdir=/app/lib/python3/dist-packages
-        --incdir=/app/include/python3
-        --sipdir=/app/share/sip
-        --stubsdir=/app/lib/python3/dist-packages
-        --sip-module=PyQt5.sip
-      - make -j $FLATPAK_BUILDER_N_JOBS
-      - make install
+      - python3 setup.py install --prefix=/app --root=/
     cleanup:
       - /bin
     sources:
       - type: archive
-        url: https://www.riverbankcomputing.com/static/Downloads/sip/4.19.21/sip-4.19.21.tar.gz
-        sha256: 6af9979ab41590e8311b8cc94356718429ef96ba0e3592bdd630da01211200ae
-  
-  - name: pyqt
+        url: https://files.pythonhosted.org/packages/bc/dd/aa60ae73bc213466fd158e3d8b91d55ac00a248b14a98919bfe0e12c5d74/sip-5.2.0.tar.gz
+        sha256: 3d3f279a61d54d832b12496409811ee062dab1ac05a1e7b40824f63b423fb0e7
+
+  - name: PyQt5_sip
     buildsystem: simple
     build-commands:
-      - QMAKEPATH=/app/lib python3 configure.py
+      - python3 setup.py install --prefix=/app --root=/
+    sources:
+      - type: archive
+        url: https://files.pythonhosted.org/packages/32/24/1537d09deb3aee2e5c390cd456420a455ac47ef3f8ac323d8397af1c1c13/PyQt5_sip-12.7.2.tar.gz
+        sha256: 16a19b9f36985b8bff30b89fb8859d831713dd528fba5600563e36ff077960a2
+
+  - name: PyQt5
+    buildsystem: simple
+    build-commands:
+      - PYVER=$(python3 -c "import sys;print(sys.version_info[1])") &&
+        QMAKEPATH=/app/lib python3 configure.py
         --confirm-license
-        --sip-incdir=/app/include/python3
         --bindir=/app/bin
-        --destdir=/app/lib/python3/dist-packages
+        --destdir=/app/lib/python3.${PYVER}/site-packages
         --designer-plugindir=/app/lib/plugins/designer
         --qml-plugindir=/app/lib/plugins/PyQt5
         --sipdir=/app/share/sip
-        --stubsdir=/app/lib/python3/dist-packages/PyQt5
+        --stubsdir=/app/lib/python3.${PYVER}/site-packages/PyQt5
       - make -j $FLATPAK_BUILDER_N_JOBS
       - make install
     cleanup:
       - /bin
     sources:
       - type: archive
-        url: https://files.pythonhosted.org/packages/3a/fb/eb51731f2dc7c22d8e1a63ba88fb702727b324c6352183a32f27f73b8116/PyQt5-5.14.1.tar.gz
-        sha256: 2f230f2dbd767099de7a0cb915abdf0cbc3256a0b5bb910eb09b99117db7a65b
+        url: https://files.pythonhosted.org/packages/4d/81/b9a66a28fb9a7bbeb60e266f06ebc4703e7e42b99e3609bf1b58ddd232b9/PyQt5-5.14.2.tar.gz
+        sha256: bd230c6fd699eabf1ceb51e13a8b79b74c00a80272c622427b80141a22269eb0
 
   - name: zeromq
     buildsystem: cmake-ninja
@@ -274,16 +302,26 @@ modules:
       - type: archive
         url: https://github.com/OpenShot/libopenshot/archive/v0.2.5.tar.gz
         sha256: 8ae7d226fbd2efbc84da4f7d9d8c7f3cc9616e4de46e1233e3b0a84ac0a429bc
-      - type: shell
-        commands:
-          - sed -i 's|${_REL_PYTHON_MODULE_PATH}|lib/python3/dist-packages|g' src/bindings/python/CMakeLists.txt
 
   - name: openshot-qt
     buildsystem: simple
     build-commands:
-      - PYTHONPATH=/app/lib/python3/dist-packages python3 setup.py install --prefix=/app --root=/
+      - python3 setup.py install --prefix=/app --root=/
+      - install -D inkscape.sh /app/bin/inkscape
+      - install -D blender.sh /app/bin/blender
     sources:
+      - type: script
+        dest-filename: inkscape.sh
+        commands:
+          - flatpak-spawn --host flatpak info org.inkscape.Inkscape >/dev/null 2>/dev/null &&
+            exec flatpak-spawn --host flatpak run org.inkscape.Inkscape "$@" ||
+            exec flatpak-spawn --host flatpak run --command=zenity $FLATPAK_ID --error --text="Inkscape not installed!"
+      - type: script
+        dest-filename: blender.sh
+        commands:
+          - INPUT_FILE="$(awk -F "=" '/app-path/ {print $2}' /.flatpak-info)${2:4}" &&
+            exec flatpak-spawn --host
+            flatpak run --filesystem=~/.local/share/flatpak --filesystem=/var/lib/flatpak org.blender.Blender -b ${INPUT_FILE} -P "$4"
       - type: archive
         url: https://github.com/OpenShot/openshot-qt/archive/v2.5.1.tar.gz
         sha256: 4c25eb9a5de42e749de4c6ca2f7a313c60e1283fe52d70c121629dbb8bb2df7b
-  
