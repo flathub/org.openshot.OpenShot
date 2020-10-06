@@ -237,7 +237,7 @@ modules:
         sha256: d6813c92921198aa8df9a40450c019a6fa06f0bd83dce2f08ba7e9fd44e45f2a
       - type: shell
         commands:
-          - sed -i 's|/usr/local/share/fonts/|/run/host/fonts/|' usvg/src/fontdb.rs
+          - sed -i 's|/usr/local/share/fonts/|/run/host/fonts/|' usvg/src/fontdb_ext.rs
 
   - name: 'x264'
     config-opts:
