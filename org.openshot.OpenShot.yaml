@@ -308,7 +308,7 @@ modules:
         url: https://github.com/OpenShot/libopenshot/archive/v0.2.5.tar.gz
         sha256: 8ae7d226fbd2efbc84da4f7d9d8c7f3cc9616e4de46e1233e3b0a84ac0a429bc
       - type: patch
-        path: olive-qt515.patch
+        path: libopenshot-gcc10.patch
 
   - name: openshot-qt
     buildsystem: simple
