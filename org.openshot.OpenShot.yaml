@@ -233,8 +233,8 @@ modules:
       - install -Dm644 capi/include/*.h -t /app/include/resvg
     sources:
       - type: archive
-        url: https://github.com/RazrFalcon/resvg/releases/download/v0.9.0/resvg-0.9.0.tar.xz
-        sha256: e06193d7f12f525ed59c9d24b4fe6a9f764ce302a32f708f20c4c7fa8dea7719
+        url: https://github.com/RazrFalcon/resvg/releases/download/v0.11.0/resvg-0.11.0.tar.xz
+        sha256: d6813c92921198aa8df9a40450c019a6fa06f0bd83dce2f08ba7e9fd44e45f2a
       - type: shell
         commands:
           - sed -i 's|/usr/local/share/fonts/|/run/host/fonts/|' usvg/src/fontdb.rs
