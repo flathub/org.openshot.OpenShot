@@ -1,0 +1,11 @@
+diff -ur resvg-0.9.1/bindings/resvg-qt/cpp/qt_capi.cpp resvg-0.9.1_new/bindings/resvg-qt/cpp/qt_capi.cpp
+--- resvg-0.9.1/bindings/resvg-qt/cpp/qt_capi.cpp	2020-06-03 08:28:32.000000000 +0200
++++ resvg-0.9.1_new/bindings/resvg-qt/cpp/qt_capi.cpp	2020-10-06 22:49:53.293261928 +0200
+@@ -3,6 +3,7 @@
+ #include <QPainter>
+ #include <QImageWriter>
+ #include <QDebug>
++#include <QPainterPath>
+ 
+ #include "qt_capi.hpp"
+ 

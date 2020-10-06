@@ -238,6 +238,8 @@ modules:
       - type: shell
         commands:
           - sed -i 's|/usr/local/share/fonts/|/run/host/fonts/|' usvg/src/fontdb.rs
+      - type: patch
+        path: resvg-qt515.patch
 
   - name: 'x264'
     config-opts:
