@@ -1,9 +1,9 @@
 app-id: org.openshot.OpenShot
 default-branch: stable
 base: io.qt.qtwebkit.BaseApp
-base-version: '5.14'
+base-version: '5.15'
 runtime: org.kde.Platform
-runtime-version: '5.14'
+runtime-version: '5.15'
 sdk: org.kde.Sdk
 command: openshot-qt
 rename-icon: openshot-qt
@@ -96,8 +96,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://files.pythonhosted.org/packages/4d/81/b9a66a28fb9a7bbeb60e266f06ebc4703e7e42b99e3609bf1b58ddd232b9/PyQt5-5.14.2.tar.gz
-        sha256: bd230c6fd699eabf1ceb51e13a8b79b74c00a80272c622427b80141a22269eb0
+        url: https://files.pythonhosted.org/packages/1d/31/896dc3dfb6c81c70164019a6cbba6ab037e3af7653d9ca60ccc874ee4c27/PyQt5-5.15.1.tar.gz
+        sha256: d9a76b850246d08da9863189ecb98f6c2aa9b4d97a3e85e29330a264aed0f9a1
 
   - name: zeromq
     buildsystem: cmake-ninja
