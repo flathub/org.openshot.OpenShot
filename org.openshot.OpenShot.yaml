@@ -1,5 +1,6 @@
 app-id: org.openshot.OpenShot
-default-branch: stable
+default-branch: beta
+desktop-file-name-prefix: "(beta) "
 base: io.qt.qtwebkit.BaseApp
 base-version: '5.15'
 runtime: org.kde.Platform
@@ -121,10 +122,8 @@ modules:
       - '*'
     sources:
       - type: archive
-        url: https://downloads.sourceforge.net/project/swig/swig/swig-3.0.12/swig-3.0.12.tar.gz
-        sha256: 7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d
-        mirror-urls:
-          - http://http.debian.net/debian/pool/main/s/swig/swig_3.0.12.orig.tar.gz
+        url: https://prdownloads.sourceforge.net/swig/swig-4.0.2.tar.gz
+        sha256: d53be9730d8d58a16bf0cbd1f8ac0c0c3e1090573168bfa151b01eb47fa906fc
 
   - name: cppzmq
     buildsystem: cmake-ninja
@@ -246,9 +245,9 @@ modules:
       - --disable-cli
       - --enable-shared
     sources:
-      - type: archive
-        url: https://download.videolan.org/x264/snapshots/x264-snapshot-20190305-2245-stable.tar.bz2
-        sha256: be52c96ef8bd930fbc1ecff03abac9b94976b444ea7641345e08e20d9e594d16
+      - type: git
+        url: https://code.videolan.org/videolan/x264.git
+        commit: cde9a93319bea766a92e306d69059c76de970190
 
   - name: nv-codec-headers
     no-autogen: true
@@ -259,8 +258,8 @@ modules:
     sources:
       - type: git
         url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
-        commit: 4a0bbfd58724d6d19851cd8a6f7a9098dde9ab77
-        tag: n9.1.23.1
+        commit: a99740a84b49fd609e04b03279e66c5a8b767440
+        tag: n10.0.26.1
 
   - name: ffmpeg
     config-opts:
@@ -279,8 +278,8 @@ modules:
       - /share/ffmpeg
     sources:
       - type: archive
-        url: https://www.ffmpeg.org/releases/ffmpeg-4.2.2.tar.xz
-        sha256: cb754255ab0ee2ea5f66f8850e1bd6ad5cac1cd855d0a2f4990fb8c668b0d29c
+        url: https://www.ffmpeg.org/releases/ffmpeg-4.2.4.tar.xz
+        sha256: 0d5da81feba073ee78e0f18e0966bcaf91464ae75e18e9a0135186249e3d2a0b
 
   - name: libopenshot-audio
     buildsystem: cmake-ninja
@@ -290,9 +289,9 @@ modules:
     cleanup:
       - /bin
     sources:
-      - type: archive
-        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.2.0.tar.gz
-        sha256: 937ff4f1c2dfb8ab5d56ad85beacaa29dfd5a79af0d9cf647386034fe9882309
+      - type: git
+        url: https://github.com/OpenShot/libopenshot-audio.git
+        commit: 12ddb3df0012552eff05a092e7f81cddd0884933
 
   - name: libopenshot
     buildsystem: cmake-ninja
@@ -304,11 +303,9 @@ modules:
       - -DENABLE_RUBY=0
       - -DRESVG_INCLUDE_DIR=/app/include/resvg
     sources:
-      - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v0.2.5.tar.gz
-        sha256: 8ae7d226fbd2efbc84da4f7d9d8c7f3cc9616e4de46e1233e3b0a84ac0a429bc
-      - type: patch
-        path: libopenshot-gcc10.patch
+      - type: git
+        url: https://github.com/OpenShot/libopenshot.git
+        commit: 414a2cdaa3e0b3a009f335670d65179d8366b470
 
   - name: openshot-qt
     buildsystem: simple
@@ -330,9 +327,6 @@ modules:
           - INPUT_FILE="$(awk -F "=" '/app-path/ {print $2}' /.flatpak-info)${2:4}" &&
             exec flatpak-spawn --host
             flatpak run --filesystem=~/.local/share/flatpak --filesystem=/var/lib/flatpak org.blender.Blender -b ${INPUT_FILE} -P "$4"
-      - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v2.5.1.tar.gz
-        sha256: 4c25eb9a5de42e749de4c6ca2f7a313c60e1283fe52d70c121629dbb8bb2df7b
-      - type: shell
-        commands: # add to <provides>
-          - sed -i '35i <id>openshot-qt</id>' xdg/org.openshot.OpenShot.appdata.xml
+      - type: git
+        url: https://github.com/OpenShot/openshot-qt.git
+        sha256: 9629c241751f65ce5f496df505e3f4da6325d9f3
