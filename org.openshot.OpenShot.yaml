@@ -37,8 +37,8 @@ modules:
       - python3 setup.py install --prefix=/app --root=/
     sources:
       - type: archive
-        url: https://files.pythonhosted.org/packages/b9/19/5cbd78eac8b1783671c40e34bb0fa83133a06d340a38b55c645076d40094/toml-0.10.0.tar.gz
-        sha256: 229f81c57791a41d65e399fc06bf0848bab550a9dfd5ed66df18ce5f05e73d5c
+        url: https://files.pythonhosted.org/packages/da/24/84d5c108e818ca294efe7c1ce237b42118643ce58a14d2462b3b2e3800d5/toml-0.10.1.tar.gz
+        sha256: 926b612be1e5ce0634a2ca03470f95169cf16f939018233a670519cb4ac58b0f
 
   - name: packaging
     buildsystem: simple
@@ -46,8 +46,8 @@ modules:
       - python3 setup.py install --prefix=/app --root=/
     sources:
       - type: archive
-        url: https://files.pythonhosted.org/packages/65/37/83e3f492eb52d771e2820e88105f605335553fe10422cba9d256faeb1702/packaging-20.3.tar.gz
-        sha256: 3c292b474fda1671ec57d46d739d072bfd495a4f51ad01a055121d81e952b7a3
+        url: https://files.pythonhosted.org/packages/55/fd/fc1aca9cf51ed2f2c11748fa797370027babd82f87829c7a8e6dbe720145/packaging-20.4.tar.gz
+        sha256: 4357f74f47b9c12db93624a82154e9b120fa8293699949152b22065d556079f8
 
   - name: pyparsing
     buildsystem: simple
@@ -66,8 +66,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://files.pythonhosted.org/packages/bc/dd/aa60ae73bc213466fd158e3d8b91d55ac00a248b14a98919bfe0e12c5d74/sip-5.2.0.tar.gz
-        sha256: 3d3f279a61d54d832b12496409811ee062dab1ac05a1e7b40824f63b423fb0e7
+        url: https://files.pythonhosted.org/packages/af/68/c603a9d6319ef1126187c42e0b13ac5fcf556d040feded2e574e1a6a27e4/sip-5.4.0.tar.gz
+        sha256: 4282ab45948674f5ef74278a8e70d1302f65c95b519a0af19409002f5715d641
 
   - name: PyQt5_sip
     buildsystem: simple
@@ -75,8 +75,8 @@ modules:
       - python3 setup.py install --prefix=/app --root=/
     sources:
       - type: archive
-        url: https://files.pythonhosted.org/packages/32/24/1537d09deb3aee2e5c390cd456420a455ac47ef3f8ac323d8397af1c1c13/PyQt5_sip-12.7.2.tar.gz
-        sha256: 16a19b9f36985b8bff30b89fb8859d831713dd528fba5600563e36ff077960a2
+        url: https://files.pythonhosted.org/packages/73/8c/c662b7ebc4b2407d8679da68e11c2a2eb275f5f2242a92610f6e5024c1f2/PyQt5_sip-12.8.1.tar.gz
+        sha256: 30e944db9abee9cc757aea16906d4198129558533eb7fadbe48c5da2bd18e0bd
 
   - name: PyQt5
     buildsystem: simple
@@ -108,8 +108,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://github.com/zeromq/libzmq/releases/download/v4.3.2/zeromq-4.3.2.tar.gz
-        sha256: ebd7b5c830d6428956b67a0454a7f8cbed1de74b3b01e5c33c5378e22740f763
+        url: https://github.com/zeromq/libzmq/releases/download/v4.3.3/zeromq-4.3.3.tar.gz
+        sha256: 9d9285db37ae942ed0780c016da87060497877af45094ff9e1a1ca736e3875a2
 
   - name: swig
     config-opts:
@@ -121,10 +121,8 @@ modules:
       - '*'
     sources:
       - type: archive
-        url: https://downloads.sourceforge.net/project/swig/swig/swig-3.0.12/swig-3.0.12.tar.gz
-        sha256: 7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d
-        mirror-urls:
-          - http://http.debian.net/debian/pool/main/s/swig/swig_3.0.12.orig.tar.gz
+        url: https://downloads.sourceforge.net/project/swig/swig/swig-4.0.2/swig-4.0.2.tar.gz
+        sha256: d53be9730d8d58a16bf0cbd1f8ac0c0c3e1090573168bfa151b01eb47fa906fc
 
   - name: cppzmq
     buildsystem: cmake-ninja
@@ -133,9 +131,10 @@ modules:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCPPZMQ_BUILD_TESTS=OFF
     sources:
-      - type: archive
-        url: https://github.com/zeromq/cppzmq/archive/v4.6.0.tar.gz
-        sha256: e9203391a0b913576153a2ad22a2dc1479b1ec325beb6c46a3237c669aef5a52
+      - type: git
+        url: https://github.com/zeromq/cppzmq.git
+        commit: 76bf169fd67b8e99c1b0e6490029d9cd5ef97666
+        tag: v4.7.1
 
   - name: unittest-cpp
     config-opts:
@@ -155,17 +154,18 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://pypi.python.org/packages/ee/2a/c4d2cdd19c84c32d978d18e9355d1ba9982a383de87d0fcb5928553d37f4/Cython-0.27.3.tar.gz
-        sha256: 6a00512de1f2e3ce66ba35c5420babaef1fe2d9c43a8faab4080b0dbcc26bc64
+        url: https://files.pythonhosted.org/packages/6c/9f/f501ba9d178aeb1f5bf7da1ad5619b207c90ac235d9859961c11829d0160/Cython-0.29.21.tar.gz
+        sha256: e57acb89bd55943c8d8bf813763d20b9099cc7165c0f16b707631a7654be9cad
 
   - name: pyzmq
     buildsystem: simple
     build-commands:
       - python3 setup.py install --prefix=/app
     sources:
-      - type: archive
-        url: https://github.com/zeromq/pyzmq/archive/v16.0.3.tar.gz
-        sha256: 680b03afd8acab0c61cab825e4c358cbb25ce05eb922e3044e4408694010dcea
+      - type: git
+        url: https://github.com/zeromq/pyzmq.git
+        commit: 8fb0f0f6e8fb7b0a0cfaf8d32d22960f70d3d4fa
+        tag: v19.0.2
 
   - name: requests
     buildsystem: simple
@@ -173,8 +173,8 @@ modules:
       - python3 setup.py install --prefix=/app --root=/
     sources:
       - type: archive
-        url: https://pypi.python.org/packages/b0/e1/eab4fc3752e3d240468a8c0b284607899d2fbfb236a56b7377a329aa8d09/requests-2.18.4.tar.gz
-        sha256: 9c443e7324ba5b85070c4a818ade28bfabedf16ea10206da1132edaa6dda237e
+        url: https://files.pythonhosted.org/packages/da/67/672b422d9daf07365259958912ba533a0ecab839d4084c487a5fe9a5405f/requests-2.24.0.tar.gz
+        sha256: b3559a131db72c33ee969480840fff4bb6dd111de7dd27c8ee1f820f4f00231b
 
   - name: urllib3
     buildsystem: simple
@@ -182,8 +182,8 @@ modules:
       - python3 setup.py install --prefix=/app --root=/
     sources:
       - type: archive
-        url: https://pypi.python.org/packages/ee/11/7c59620aceedcc1ef65e156cc5ce5a24ef87be4107c2b74458464e437a5d/urllib3-1.22.tar.gz
-        sha256: cc44da8e1145637334317feebd728bd869a35285b93cbb4cca2577da7e62db4f
+        url: https://files.pythonhosted.org/packages/81/f4/87467aeb3afc4a6056e1fe86626d259ab97e1213b1dfec14c7cb5f538bf0/urllib3-1.25.10.tar.gz
+        sha256: 91056c15fa70756691db97756772bb1eb9678fa585d9184f24534b100dc60f4a
 
   - name: chardet
     buildsystem: simple
@@ -202,8 +202,8 @@ modules:
       - python3 setup.py install --prefix=/app --root=/
     sources:
       - type: archive
-        url: https://pypi.python.org/packages/23/3f/8be01c50ed24a4bd6b8da799839066ce0288f66f5e11f0367323467f0cbc/certifi-2017.11.5.tar.gz
-        sha256: 5ec74291ca1136b40f0379e1128ff80e866597e4e2c1e755739a913bbc3613c0
+        url: https://files.pythonhosted.org/packages/40/a7/ded59fa294b85ca206082306bba75469a38ea1c7d44ea7e1d64f5443d67a/certifi-2020.6.20.tar.gz
+        sha256: 5930595817496dd21bb8dc35dad090f1c2cd0adfaf21204bf6732ca5d8ee34d3
   
   - name: idna
     buildsystem: simple
@@ -211,8 +211,8 @@ modules:
       - python3 setup.py install --prefix=/app --root=/
     sources:
       - type: archive
-        url: https://files.pythonhosted.org/packages/65/c4/80f97e9c9628f3cac9b98bfca0402ede54e0563b56482e3e6e45c43c4935/idna-2.7.tar.gz
-        sha256: 684a38a6f903c1d71d6d5fac066b58d7768af4de2b832e426ec79c30daa94a16
+        url: https://files.pythonhosted.org/packages/ea/b7/e0e3c1c467636186c39925827be42f16fee389dc404ac29e930e9136be70/idna-2.10.tar.gz
+        sha256: b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6
 
   - name: ImageMagick
     config-opts:
@@ -222,8 +222,8 @@ modules:
       - /share/doc
     sources:
       - type: archive
-        url: https://imagemagick.org/download/releases/ImageMagick-7.0.9-27.tar.xz
-        sha256: 0589b567dfc14390a81858feabff06b974162690660cc02893cbe9713b59db1c
+        url: https://imagemagick.org/download/releases/ImageMagick-7.0.10-34.tar.xz
+        sha256: d35e02bab707611fa28f13244a0d91e251a9a8d6a4a8de405738f5ead49a06aa
 
   - name: resvg
     buildsystem: simple
@@ -246,9 +246,9 @@ modules:
       - --disable-cli
       - --enable-shared
     sources:
-      - type: archive
-        url: https://download.videolan.org/x264/snapshots/x264-snapshot-20190305-2245-stable.tar.bz2
-        sha256: be52c96ef8bd930fbc1ecff03abac9b94976b444ea7641345e08e20d9e594d16
+      - type: git
+        url: https://code.videolan.org/videolan/x264.git
+        commit: cde9a93319bea766a92e306d69059c76de970190
 
   - name: nv-codec-headers
     no-autogen: true
@@ -259,8 +259,8 @@ modules:
     sources:
       - type: git
         url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
-        commit: 4a0bbfd58724d6d19851cd8a6f7a9098dde9ab77
-        tag: n9.1.23.1
+        commit: a99740a84b49fd609e04b03279e66c5a8b767440
+        tag: n10.0.26.1
 
   - name: ffmpeg
     config-opts:
@@ -279,8 +279,8 @@ modules:
       - /share/ffmpeg
     sources:
       - type: archive
-        url: https://www.ffmpeg.org/releases/ffmpeg-4.2.2.tar.xz
-        sha256: cb754255ab0ee2ea5f66f8850e1bd6ad5cac1cd855d0a2f4990fb8c668b0d29c
+        url: https://www.ffmpeg.org/releases/ffmpeg-4.2.4.tar.xz
+        sha256: 0d5da81feba073ee78e0f18e0966bcaf91464ae75e18e9a0135186249e3d2a0b
 
   - name: libopenshot-audio
     buildsystem: cmake-ninja
