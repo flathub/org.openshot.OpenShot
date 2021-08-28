@@ -280,8 +280,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.2.0.tar.gz
-        sha256: 937ff4f1c2dfb8ab5d56ad85beacaa29dfd5a79af0d9cf647386034fe9882309
+        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.2.1.tar.gz
+        sha256: b502041044d07be3c22787eb9a422bf338ef47b88b1af547002d1ec1bc7b07a4
 
   - name: libopenshot
     buildsystem: cmake-ninja
@@ -294,10 +294,8 @@ modules:
       - -DRESVG_INCLUDE_DIR=/app/include/resvg
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v0.2.5.tar.gz
-        sha256: 8ae7d226fbd2efbc84da4f7d9d8c7f3cc9616e4de46e1233e3b0a84ac0a429bc
-      - type: patch
-        path: libopenshot-gcc10.patch
+        url: https://github.com/OpenShot/libopenshot/archive/v0.2.6.tar.gz
+        sha256: 3e6f60c86748ea814a9c0c48e5a59c5b04a5876a43b763258d0dd3f6ae84fde8
 
   - name: openshot-qt
     buildsystem: simple
@@ -320,8 +318,8 @@ modules:
             exec flatpak-spawn --host
             flatpak run --filesystem=~/.local/share/flatpak --filesystem=/var/lib/flatpak org.blender.Blender -b ${INPUT_FILE} -P "$4"
       - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v2.5.1.tar.gz
-        sha256: 4c25eb9a5de42e749de4c6ca2f7a313c60e1283fe52d70c121629dbb8bb2df7b
+        url: https://github.com/OpenShot/openshot-qt/archive/v2.6.0.tar.gz
+        sha256: 3d637d6028cf680e634ced52de08dc22c1c603fdb3a2ede515b1b528f0b9cd97
       - type: shell
         commands: # add to <provides>
           - sed -i '35i <id>openshot-qt</id>' xdg/org.openshot.OpenShot.appdata.xml
