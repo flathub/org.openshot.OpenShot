@@ -261,6 +261,7 @@ modules:
       - --enable-libfontconfig
       - --enable-libfreetype
       - --enable-libopus
+      - --enable-libvorbis
       - --enable-libvpx
       - --enable-avresample
       - --enable-libx264
