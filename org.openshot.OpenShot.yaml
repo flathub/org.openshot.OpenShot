@@ -1,9 +1,9 @@
 app-id: org.openshot.OpenShot
 default-branch: stable
 base: io.qt.qtwebkit.BaseApp
-base-version: '5.15'
+base-version: '5.15-21.08'
 runtime: org.kde.Platform
-runtime-version: '5.15'
+runtime-version: '5.15-21.08'
 sdk: org.kde.Sdk
 command: openshot-qt
 rename-icon: openshot-qt
@@ -31,32 +31,8 @@ cleanup-commands: # https://github.com/flatpak/flatpak/issues/1082
   - rm -rf /app/{include,lib/{cmake,mkspecs,pkgconfig}}
 modules:
 
-  - name: toml
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py install --prefix=/app --root=/
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/da/24/84d5c108e818ca294efe7c1ce237b42118643ce58a14d2462b3b2e3800d5/toml-0.10.1.tar.gz
-        sha256: 926b612be1e5ce0634a2ca03470f95169cf16f939018233a670519cb4ac58b0f
-
-  - name: packaging
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py install --prefix=/app --root=/
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/55/fd/fc1aca9cf51ed2f2c11748fa797370027babd82f87829c7a8e6dbe720145/packaging-20.4.tar.gz
-        sha256: 4357f74f47b9c12db93624a82154e9b120fa8293699949152b22065d556079f8
-
-  - name: pyparsing
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py install --prefix=/app --root=/
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/c1/47/dfc9c342c9842bbe0036c7f763d2d6686bcf5eb1808ba3e170afdb282210/pyparsing-2.4.7.tar.gz
-        sha256: c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1
+  - python3-toml.json
+  - python3-packaging.json
 
   - name: sip
     buildsystem: simple
@@ -146,52 +122,7 @@ modules:
         commit: 8fb0f0f6e8fb7b0a0cfaf8d32d22960f70d3d4fa
         tag: v19.0.2
 
-  - name: requests
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py install --prefix=/app --root=/
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/da/67/672b422d9daf07365259958912ba533a0ecab839d4084c487a5fe9a5405f/requests-2.24.0.tar.gz
-        sha256: b3559a131db72c33ee969480840fff4bb6dd111de7dd27c8ee1f820f4f00231b
-
-  - name: urllib3
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py install --prefix=/app --root=/
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/81/f4/87467aeb3afc4a6056e1fe86626d259ab97e1213b1dfec14c7cb5f538bf0/urllib3-1.25.10.tar.gz
-        sha256: 91056c15fa70756691db97756772bb1eb9678fa585d9184f24534b100dc60f4a
-
-  - name: chardet
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py install --prefix=/app --root=/
-    cleanup:
-      - /bin
-    sources:
-      - type: archive
-        url: https://pypi.python.org/packages/fc/bb/a5768c230f9ddb03acc9ef3f0d4a3cf93462473795d18e9535498c8f929d/chardet-3.0.4.tar.gz
-        sha256: 84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae
-
-  - name: certifi
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py install --prefix=/app --root=/
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/40/a7/ded59fa294b85ca206082306bba75469a38ea1c7d44ea7e1d64f5443d67a/certifi-2020.6.20.tar.gz
-        sha256: 5930595817496dd21bb8dc35dad090f1c2cd0adfaf21204bf6732ca5d8ee34d3
-  
-  - name: idna
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py install --prefix=/app --root=/
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/ea/b7/e0e3c1c467636186c39925827be42f16fee389dc404ac29e930e9136be70/idna-2.10.tar.gz
-        sha256: b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6
+  - python3-requests.json
 
   - name: ImageMagick
     config-opts:
