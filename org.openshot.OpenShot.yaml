@@ -1,9 +1,9 @@
 app-id: org.openshot.OpenShot
 default-branch: stable
 base: io.qt.qtwebkit.BaseApp
-base-version: '5.15-21.08'
+base-version: '5.15-22.08'
 runtime: org.kde.Platform
-runtime-version: '5.15-21.08'
+runtime-version: '5.15-22.08'
 sdk: org.kde.Sdk
 command: openshot-qt
 rename-icon: openshot-qt
@@ -115,7 +115,7 @@ modules:
   - name: pyzmq
     buildsystem: simple
     build-commands:
-      - python3 setup.py install --prefix=/app
+      - python3 setup.py install --prefix=/app --root=/
     sources:
       - type: git
         url: https://github.com/zeromq/pyzmq.git
@@ -149,7 +149,7 @@ modules:
         commands:
           - sed -i 's|/usr/local/share/fonts/|/run/host/fonts/|' usvg/src/fontdb.rs
       - type: patch
-        path: resvg-qt515.patch
+        path: patches/resvg-qt515.patch
 
   - name: 'x264'
     config-opts:
@@ -202,22 +202,29 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.2.2.tar.gz
-        sha256: 66bedfda0d8d430598b21bc2dde6c0016a758a6c83467d0273a9d692de10baaf
+        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.3.0.tar.gz
+        sha256: 007ba6ee812a58506341dd66055dba575b3907e5274a0e7416f99c2fbb80021c
+
+  - name: babl
+    buildsystem: meson
+    config-opts:
+      - -Denable-gir=false
+      - -Dwith-docs=false
+    sources:
+      - type: archive
+        url: https://download.gimp.org/pub/babl/0.1/babl-0.1.96.tar.xz
+        sha256: 33673fe459a983f411245a49f81fd7f1966af1ea8eca9b095a940c542b8545f6
 
   - name: libopenshot
     buildsystem: cmake-ninja
     builddir: true
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-      - -DLIBOPENSHOT_AUDIO_BASE_DIR=/app/include/libopenshot-audio
-      - -DUNITTEST++_INCLUDE_DIR=/app/include/UnitTest++
       - -DENABLE_RUBY=0
-      - -DRESVG_INCLUDE_DIR=/app/include/resvg
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v0.2.7.tar.gz
-        sha256: 568eab6d69d469c5f745f0e25387ca5e000f7c28be48417b0d7770577ac74a28
+        url: https://github.com/OpenShot/libopenshot/archive/v0.3.0.tar.gz
+        sha256: 5b289432b1209f11fe60c17c07e9365ab62e3074dcc7d50996fc816dfe54a282
 
   - name: openshot-qt
     buildsystem: simple
@@ -240,8 +247,7 @@ modules:
             exec flatpak-spawn --host
             flatpak run --filesystem=~/.local/share/flatpak --filesystem=/var/lib/flatpak org.blender.Blender -b ${INPUT_FILE} -P "$4"
       - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v2.6.1.tar.gz
-        sha256: 11651d5e7287da3c766ce6b447aef8da5cdadaf5626a2816e9025c831d0e1a66
-      - type: shell
-        commands: # add to <provides>
-          - sed -i '35i <id>openshot-qt</id>' xdg/org.openshot.OpenShot.appdata.xml
+        url: https://github.com/OpenShot/openshot-qt/archive/v3.0.0.tar.gz
+        sha256: 9a6b76ebb32f34722a30af0cafeea2dee1ef11daef1d7c9c73ba9b1350ea57f9
+      - type: patch
+        path: patches/openshot-appdata.patch
