@@ -1,0 +1,10 @@
+--- openshot-qt-3.0.0/xdg/org.openshot.OpenShot.appdata.xml-origin	2022-12-13 16:25:53.638839942 -0500
++++ openshot-qt-3.0.0/xdg/org.openshot.OpenShot.appdata.xml	2022-12-13 16:26:19.426251663 -0500
+@@ -61,6 +61,7 @@
+   </content_rating>
+   <provides>
+     <binary>openshot-qt</binary>
++    <id>openshot-qt</id>
+     <id>org.openshot.OpenShot.desktop</id>
+   </provides>
+   <releases>
