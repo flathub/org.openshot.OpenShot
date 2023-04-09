@@ -1,5 +1,4 @@
 app-id: org.openshot.OpenShot
-default-branch: stable
 base: io.qt.qtwebkit.BaseApp
 base-version: '5.15-22.08'
 runtime: org.kde.Platform
@@ -25,6 +24,7 @@ cleanup:
   - /lib/pkgconfig
   - /share/cmake
   - /share/man
+  - /share/sip
   - '*.a'
   - '*.la'
 cleanup-commands: # https://github.com/flatpak/flatpak/issues/1082
@@ -200,10 +200,11 @@ modules:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
     cleanup:
       - /bin
+      - /share/doc
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.3.0.tar.gz
-        sha256: 007ba6ee812a58506341dd66055dba575b3907e5274a0e7416f99c2fbb80021c
+        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.3.1.tar.gz
+        sha256: acaad852d6d72fee28e015caf328fc8ebf89453ca97e3071372e12cb9c309898
 
   - name: babl
     buildsystem: meson
@@ -221,10 +222,12 @@ modules:
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - -DENABLE_RUBY=0
+    cleanup:
+      - /share/doc
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v0.3.0.tar.gz
-        sha256: 5b289432b1209f11fe60c17c07e9365ab62e3074dcc7d50996fc816dfe54a282
+        url: https://github.com/OpenShot/libopenshot/archive/v0.3.1.tar.gz
+        sha256: 239f9df1f5b547257d5e76062c3177ff3ff372b8cda336637d752141a5a8e625
 
   - name: openshot-qt
     buildsystem: simple
@@ -247,7 +250,7 @@ modules:
             exec flatpak-spawn --host
             flatpak run --filesystem=~/.local/share/flatpak --filesystem=/var/lib/flatpak org.blender.Blender -b ${INPUT_FILE} -P "$4"
       - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v3.0.0.tar.gz
-        sha256: 9a6b76ebb32f34722a30af0cafeea2dee1ef11daef1d7c9c73ba9b1350ea57f9
+        url: https://github.com/OpenShot/openshot-qt/archive/v3.1.0.tar.gz
+        sha256: 0522bd6c7d2b254e598d0ed53e7b6b8d7af566e6242f1d2af22c281807fc3f9a
       - type: patch
         path: patches/openshot-appdata.patch
