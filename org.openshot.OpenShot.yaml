@@ -1,11 +1,13 @@
 app-id: org.openshot.OpenShot
-base: io.qt.qtwebkit.BaseApp
-base-version: '5.15-22.08'
+base: com.riverbankcomputing.PyQt.BaseApp
+base-version: '5.15-23.08'
 runtime: org.kde.Platform
-runtime-version: '5.15-22.08'
+runtime-version: '5.15-23.08'
 sdk: org.kde.Sdk
 command: openshot-qt
 rename-icon: openshot-qt
+rename-mime-icons:
+  - openshot-qt-doc
 finish-args:
   - --require-version=0.11.4 # fixes file saving
   - --share=ipc
@@ -15,65 +17,27 @@ finish-args:
   - --filesystem=host
   - --socket=pulseaudio
   - --talk-name=org.freedesktop.Flatpak
+  - --env=QTWEBENGINEPROCESS_PATH=/app/bin/QtWebEngineProcess
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
 build-options:
   append-path: /usr/lib/sdk/rust-stable/bin
 cleanup:
   - /include
+  - /lib/cmake
+  - /lib/mkspecs
   - /lib/pkgconfig
   - /share/cmake
   - /share/man
   - /share/sip
   - '*.a'
   - '*.la'
-cleanup-commands: # https://github.com/flatpak/flatpak/issues/1082
-  - rm -rf /app/{include,lib/{cmake,mkspecs,pkgconfig}}
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
 modules:
 
   - python3-toml.json
   - python3-packaging.json
-
-  - name: sip
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py install --prefix=/app --root=/
-    cleanup:
-      - /bin
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/af/68/c603a9d6319ef1126187c42e0b13ac5fcf556d040feded2e574e1a6a27e4/sip-5.4.0.tar.gz
-        sha256: 4282ab45948674f5ef74278a8e70d1302f65c95b519a0af19409002f5715d641
-
-  - name: PyQt5_sip
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py install --prefix=/app --root=/
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/73/8c/c662b7ebc4b2407d8679da68e11c2a2eb275f5f2242a92610f6e5024c1f2/PyQt5_sip-12.8.1.tar.gz
-        sha256: 30e944db9abee9cc757aea16906d4198129558533eb7fadbe48c5da2bd18e0bd
-
-  - name: PyQt5
-    buildsystem: simple
-    build-commands:
-      - PYVER=$(python3 -c "import sys;print(sys.version_info[1])") &&
-        QMAKEPATH=/app/lib python3 configure.py
-        --confirm-license
-        --bindir=/app/bin
-        --destdir=/app/lib/python3.${PYVER}/site-packages
-        --designer-plugindir=/app/lib/plugins/designer
-        --qml-plugindir=/app/lib/plugins/PyQt5
-        --sipdir=/app/share/sip
-        --stubsdir=/app/lib/python3.${PYVER}/site-packages/PyQt5
-      - make -j $FLATPAK_BUILDER_N_JOBS
-      - make install
-    cleanup:
-      - /bin
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/1d/31/896dc3dfb6c81c70164019a6cbba6ab037e3af7653d9ca60ccc874ee4c27/PyQt5-5.15.1.tar.gz
-        sha256: d9a76b850246d08da9863189ecb98f6c2aa9b4d97a3e85e29330a264aed0f9a1
 
   - name: zeromq
     buildsystem: cmake-ninja
@@ -84,8 +48,8 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://github.com/zeromq/libzmq/releases/download/v4.3.3/zeromq-4.3.3.tar.gz
-        sha256: 9d9285db37ae942ed0780c016da87060497877af45094ff9e1a1ca736e3875a2
+        url: https://github.com/zeromq/libzmq/releases/download/v4.3.5/zeromq-4.3.5.tar.gz
+        sha256: 6653ef5910f17954861fe72332e68b03ca6e4d9c7160eb3a8de5a5a913bfab43
 
   - name: swig
     config-opts:
@@ -132,8 +96,8 @@ modules:
       - /share/doc
     sources:
       - type: archive
-        url: https://imagemagick.org/download/releases/ImageMagick-7.0.10-34.tar.xz
-        sha256: d35e02bab707611fa28f13244a0d91e251a9a8d6a4a8de405738f5ead49a06aa
+        url: https://download.imagemagick.org/archive/releases/ImageMagick-7.1.1-29.tar.xz
+        sha256: f140465fbeb0b4724cba4394bc6f6fb32715731c1c62572d586f4f1c8b9b0685
 
   - name: resvg
     buildsystem: simple
@@ -192,6 +156,8 @@ modules:
       - type: archive
         url: https://www.ffmpeg.org/releases/ffmpeg-4.2.4.tar.xz
         sha256: 0d5da81feba073ee78e0f18e0966bcaf91464ae75e18e9a0135186249e3d2a0b
+      - type: patch
+        path: patches/ffmpeg-as-fix.patch
 
   - name: libopenshot-audio
     buildsystem: cmake-ninja
