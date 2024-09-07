@@ -182,6 +182,43 @@ modules:
         url: https://download.gimp.org/pub/babl/0.1/babl-0.1.96.tar.xz
         sha256: 33673fe459a983f411245a49f81fd7f1966af1ea8eca9b095a940c542b8545f6
 
+  # Required by libopenshot when building with opencv.
+  - name: protobuf
+    buildsystem: autotools
+    sources:
+      - type: git
+        url: https://github.com/protocolbuffers/protobuf/
+        # This is the expected version.
+        tag: v3.12.4
+    cleanup:
+      - /bin
+
+  - name: opencv
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DBUILD_TESTING=OFF
+      - -DOPENCV_GENERATE_PKGCONFIG=ON
+    cleanup:
+      - /bin
+    sources:
+      - type: archive
+        url: https://github.com/opencv/opencv/archive/4.10.0.tar.gz
+        sha256: b2171af5be6b26f7a06b1229948bbb2bdaa74fcf5cd097e0af6378fce50a6eb9
+        x-checker-data:
+          type: anitya
+          project-id: 6615
+          stable-only: true
+          url-template: https://github.com/opencv/opencv/archive/$version.tar.gz
+      - type: archive
+        url: https://github.com/opencv/opencv_contrib/archive/4.10.0.tar.gz
+        sha256: 65597f8fb8dc2b876c1b45b928bbcc5f772ddbaf97539bf1b737623d0604cba1
+        x-checker-data:
+          type: anitya
+          project-id: 6615
+          stable-only: true
+          url-template: https://github.com/opencv/opencv_contrib/archive/$version.tar.gz
   - name: libopenshot
     buildsystem: cmake-ninja
     builddir: true
