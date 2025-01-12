@@ -192,7 +192,7 @@ modules:
         tag: v3.12.4
     cleanup:
       - /bin
- 
+
   - name: opencv
     buildsystem: cmake-ninja
     builddir: true
