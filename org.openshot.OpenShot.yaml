@@ -1,8 +1,8 @@
 app-id: org.openshot.OpenShot
 base: com.riverbankcomputing.PyQt.BaseApp
-base-version: '5.15-23.08'
+base-version: '5.15-24.08'
 runtime: org.kde.Platform
-runtime-version: '5.15-23.08'
+runtime-version: '5.15-24.08'
 sdk: org.kde.Sdk
 command: openshot-qt
 rename-icon: openshot-qt
@@ -83,8 +83,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/zeromq/pyzmq.git
-        commit: 8fb0f0f6e8fb7b0a0cfaf8d32d22960f70d3d4fa
-        tag: v19.0.2
+        commit: 46af3b5f5fdfdfe4e3ea2a432081845c3c054609
+        tag: v22.3.0
 
   - python3-requests.json
 
