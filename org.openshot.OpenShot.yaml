@@ -61,8 +61,8 @@ modules:
       - '*'
     sources:
       - type: archive
-        url: https://downloads.sourceforge.net/project/swig/swig/swig-4.0.2/swig-4.0.2.tar.gz
-        sha256: d53be9730d8d58a16bf0cbd1f8ac0c0c3e1090573168bfa151b01eb47fa906fc
+        url: https://downloads.sourceforge.net/project/swig/swig/swig-4.3.0/swig-4.3.0.tar.gz
+        sha256: f7203ef796f61af986c70c05816236cbd0d31b7aa9631e5ab53020ab7804aa9e
 
   - name: cppzmq
     buildsystem: cmake-ninja
@@ -73,8 +73,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/zeromq/cppzmq.git
-        commit: 76bf169fd67b8e99c1b0e6490029d9cd5ef97666
-        tag: v4.7.1
+        commit: c94c20743ed7d4aa37835a5c46567ab0790d4acc
+        tag: v4.10.0
 
   - name: pyzmq
     buildsystem: simple
@@ -96,8 +96,8 @@ modules:
       - /share/doc
     sources:
       - type: archive
-        url: https://download.imagemagick.org/archive/releases/ImageMagick-7.1.1-29.tar.xz
-        sha256: f140465fbeb0b4724cba4394bc6f6fb32715731c1c62572d586f4f1c8b9b0685
+        url: https://download.imagemagick.org/archive/releases/ImageMagick-7.1.1-43.tar.xz
+        sha256: fa79401342b409b9b7f7d3146bd6595787373811e72be1669c39b58d1489da4f
 
   - name: resvg
     buildsystem: simple
@@ -122,7 +122,7 @@ modules:
     sources:
       - type: git
         url: https://code.videolan.org/videolan/x264.git
-        commit: cde9a93319bea766a92e306d69059c76de970190
+        commit: 373697b467f7cd0af88f1e9e32d4f10540df4687
 
   - name: nv-codec-headers
     no-autogen: true
@@ -133,8 +133,8 @@ modules:
     sources:
       - type: git
         url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
-        commit: a99740a84b49fd609e04b03279e66c5a8b767440
-        tag: n10.0.26.1
+        commit: c69278340ab1d5559c7d7bf0edf615dc33ddbba7
+        tag: n12.2.72.0
 
   - name: ffmpeg
     config-opts:
@@ -169,8 +169,8 @@ modules:
       - /share/doc
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.3.3.tar.gz
-        sha256: 5c0f9972828a5cc1614e10d54bea8ebeabf3bfe361024f28516a856918f5e8f2
+        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.4.0.tar.gz
+        sha256: 1abdedf9c8686c972c42225a283f518ed2ade445c2e454996b6709d8cc8d1704
 
   - name: babl
     buildsystem: meson
@@ -179,8 +179,8 @@ modules:
       - -Dwith-docs=false
     sources:
       - type: archive
-        url: https://download.gimp.org/pub/babl/0.1/babl-0.1.96.tar.xz
-        sha256: 33673fe459a983f411245a49f81fd7f1966af1ea8eca9b095a940c542b8545f6
+        url: https://download.gimp.org/pub/babl/0.1/babl-0.1.110.tar.xz
+        sha256: bf47be7540d6275389f66431ef03064df5376315e243d0bab448c6aa713f5743
 
   # Required by libopenshot when building with opencv.
   - name: protobuf
@@ -192,7 +192,7 @@ modules:
         tag: v3.12.4
     cleanup:
       - /bin
-
+ 
   - name: opencv
     buildsystem: cmake-ninja
     builddir: true
@@ -204,16 +204,16 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://github.com/opencv/opencv/archive/4.10.0.tar.gz
-        sha256: b2171af5be6b26f7a06b1229948bbb2bdaa74fcf5cd097e0af6378fce50a6eb9
+        url: https://github.com/opencv/opencv/archive/4.11.0.tar.gz
+        sha256: 9a7c11f924eff5f8d8070e297b322ee68b9227e003fd600d4b8122198091665f
         x-checker-data:
           type: anitya
           project-id: 6615
           stable-only: true
           url-template: https://github.com/opencv/opencv/archive/$version.tar.gz
       - type: archive
-        url: https://github.com/opencv/opencv_contrib/archive/4.10.0.tar.gz
-        sha256: 65597f8fb8dc2b876c1b45b928bbcc5f772ddbaf97539bf1b737623d0604cba1
+        url: https://github.com/opencv/opencv_contrib/archive/4.11.0.tar.gz
+        sha256: 2dfc5957201de2aa785064711125af6abb2e80a64e2dc246aca4119b19687041
         x-checker-data:
           type: anitya
           project-id: 6615
@@ -229,8 +229,8 @@ modules:
       - /share/doc
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v0.3.3.tar.gz
-        sha256: 591b74651ddf59f83d69a592d84bbabbe7290293092a87be9c2993d5ce9a1638
+        url: https://github.com/OpenShot/libopenshot/archive/v0.4.0.tar.gz
+        sha256: be0e760d81275543f7fbbf87863645748c3fe8aa8f4b5b771ff45a5d026bc9cc
 
   - name: openshot-qt
     buildsystem: simple
@@ -253,7 +253,7 @@ modules:
             exec flatpak-spawn --host
             flatpak run --filesystem=~/.local/share/flatpak --filesystem=/var/lib/flatpak org.blender.Blender -b ${INPUT_FILE} -P "$4"
       - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v3.2.1.tar.gz
-        sha256: a177e6380ac655c158480b90201bde10b093018f210e1f7b81bb70b1a488bc7d
+        url: https://github.com/OpenShot/openshot-qt/archive/v3.3.0.tar.gz
+        sha256: f5471eec94d59830ea58351b93e69d4c56b42874d927fbd6482f83b9bb545d4f
       - type: patch
         path: patches/openshot-appdata.patch
