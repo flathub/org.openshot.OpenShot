@@ -169,8 +169,8 @@ modules:
       - /share/doc
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.3.3.tar.gz
-        sha256: 5c0f9972828a5cc1614e10d54bea8ebeabf3bfe361024f28516a856918f5e8f2
+        url: https://github.com/OpenShot/libopenshot-audio/archive/v0.4.0.tar.gz
+        sha256: 1abdedf9c8686c972c42225a283f518ed2ade445c2e454996b6709d8cc8d1704
 
   - name: babl
     buildsystem: meson
@@ -229,8 +229,8 @@ modules:
       - /share/doc
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v0.3.3.tar.gz
-        sha256: 591b74651ddf59f83d69a592d84bbabbe7290293092a87be9c2993d5ce9a1638
+        url: https://github.com/OpenShot/libopenshot/archive/v0.4.0.tar.gz
+        sha256: be0e760d81275543f7fbbf87863645748c3fe8aa8f4b5b771ff45a5d026bc9cc
 
   - name: openshot-qt
     buildsystem: simple
@@ -253,7 +253,7 @@ modules:
             exec flatpak-spawn --host
             flatpak run --filesystem=~/.local/share/flatpak --filesystem=/var/lib/flatpak org.blender.Blender -b ${INPUT_FILE} -P "$4"
       - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v3.2.1.tar.gz
-        sha256: a177e6380ac655c158480b90201bde10b093018f210e1f7b81bb70b1a488bc7d
+        url: https://github.com/OpenShot/openshot-qt/archive/v3.3.0.tar.gz
+        sha256: f5471eec94d59830ea58351b93e69d4c56b42874d927fbd6482f83b9bb545d4f
       - type: patch
         path: patches/openshot-appdata.patch
