@@ -11,7 +11,8 @@ rename-mime-icons:
 finish-args:
   - --require-version=0.11.4 # fixes file saving
   - --share=ipc
-  - --socket=x11
+  - --socket=fallback-x11
+  - --socket=wayland
   - --device=dri
   - --share=network
   - --filesystem=host
