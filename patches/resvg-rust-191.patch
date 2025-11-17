@@ -1,0 +1,13 @@
+diff --git a/src/backend_qt/mod.rs b/src/backend_qt/mod.rs
+index 4409a6f..4ba98a0 100644
+--- a/src/backend_qt/mod.rs
++++ b/src/backend_qt/mod.rs
+@@ -16,7 +16,7 @@ macro_rules! try_create_image {
+             qt::Image::new_rgba_premultiplied($size.width(), $size.height()),
+             $ret,
+             "Failed to create a {}x{} image.", $size.width(), $size.height()
+-        );
++        )
+     };
+ }
+ 

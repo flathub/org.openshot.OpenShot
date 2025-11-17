@@ -1,8 +1,8 @@
 app-id: org.openshot.OpenShot
 base: com.riverbankcomputing.PyQt.BaseApp
-base-version: '5.15-24.08'
+base-version: '5.15-25.08'
 runtime: org.kde.Platform
-runtime-version: '5.15-24.08'
+runtime-version: '5.15-25.08'
 sdk: org.kde.Sdk
 command: openshot-qt
 rename-icon: openshot-qt
@@ -43,6 +43,7 @@ modules:
     buildsystem: cmake-ninja
     builddir: true
     config-opts:
+      - -DCMAKE_POLICY_VERSION_MINIMUM=3.5
       - -DCMAKE_BUILD_TYPE=Release
     cleanup:
       - /bin
@@ -68,6 +69,7 @@ modules:
     buildsystem: cmake-ninja
     builddir: true
     config-opts:
+      - -DCMAKE_POLICY_VERSION_MINIMUM=3.5
       - -DCMAKE_BUILD_TYPE=Release
       - -DCPPZMQ_BUILD_TESTS=OFF
     sources:
@@ -79,12 +81,12 @@ modules:
   - name: pyzmq
     buildsystem: simple
     build-commands:
-      - python3 setup.py install --prefix=/app --root=/
+      - pip3 install --no-build-isolation --prefix=/app .
     sources:
       - type: git
         url: https://github.com/zeromq/pyzmq.git
-        commit: 46af3b5f5fdfdfe4e3ea2a432081845c3c054609
-        tag: v22.3.0
+        commit: 015e616fbc50023e7c5c77db2ddd7bee2919c6c1
+        tag: v23.2.1
 
   - python3-requests.json
 
@@ -113,7 +115,9 @@ modules:
         commands:
           - sed -i 's|/usr/local/share/fonts/|/run/host/fonts/|' usvg/src/fontdb.rs
       - type: patch
-        path: patches/resvg-qt515.patch
+        paths:
+          - patches/resvg-qt515.patch
+          - patches/resvg-rust-191.patch
 
   - name: 'x264'
     config-opts:
@@ -123,18 +127,6 @@ modules:
       - type: git
         url: https://code.videolan.org/videolan/x264.git
         commit: cde9a93319bea766a92e306d69059c76de970190
-
-  - name: nv-codec-headers
-    no-autogen: true
-    make-install-args:
-      - PREFIX=/app
-    cleanup:
-      - '*'
-    sources:
-      - type: git
-        url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
-        commit: a99740a84b49fd609e04b03279e66c5a8b767440
-        tag: n10.0.26.1
 
   - name: ffmpeg
     config-opts:
@@ -219,6 +211,8 @@ modules:
           project-id: 6615
           stable-only: true
           url-template: https://github.com/opencv/opencv_contrib/archive/$version.tar.gz
+      - type: patch
+        path: patches/opencv-cmake.patch
   - name: libopenshot
     buildsystem: cmake-ninja
     builddir: true
