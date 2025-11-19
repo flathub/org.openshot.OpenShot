@@ -1,8 +1,8 @@
 app-id: org.openshot.OpenShot
 base: com.riverbankcomputing.PyQt.BaseApp
-base-version: '5.15-25.08'
+base-version: 5.15-25.08
 runtime: org.kde.Platform
-runtime-version: '5.15-25.08'
+runtime-version: 5.15-25.08
 sdk: org.kde.Sdk
 command: openshot-qt
 rename-icon: openshot-qt
@@ -104,7 +104,8 @@ modules:
   - name: resvg
     buildsystem: simple
     build-commands:
-      - cargo build --verbose --release --frozen --manifest-path capi/Cargo.toml --features "qt-backend"
+      - cargo build --verbose --release --frozen --manifest-path capi/Cargo.toml --features
+        "qt-backend"
       - install -Dm644 target/release/libresvg.so -t /app/lib
       - install -Dm644 capi/include/*.h -t /app/include/resvg
     sources:
@@ -119,7 +120,7 @@ modules:
           - patches/resvg-qt515.patch
           - patches/resvg-rust-191.patch
 
-  - name: 'x264'
+  - name: x264
     config-opts:
       - --disable-cli
       - --enable-shared
@@ -196,16 +197,16 @@ modules:
       - /bin
     sources:
       - type: archive
-        url: https://github.com/opencv/opencv/archive/4.10.0.tar.gz
-        sha256: b2171af5be6b26f7a06b1229948bbb2bdaa74fcf5cd097e0af6378fce50a6eb9
+        url: https://github.com/opencv/opencv/archive/4.12.0.tar.gz
+        sha256: 44c106d5bb47efec04e531fd93008b3fcd1d27138985c5baf4eafac0e1ec9e9d
         x-checker-data:
           type: anitya
           project-id: 6615
           stable-only: true
           url-template: https://github.com/opencv/opencv/archive/$version.tar.gz
       - type: archive
-        url: https://github.com/opencv/opencv_contrib/archive/4.10.0.tar.gz
-        sha256: 65597f8fb8dc2b876c1b45b928bbcc5f772ddbaf97539bf1b737623d0604cba1
+        url: https://github.com/opencv/opencv_contrib/archive/4.12.0.tar.gz
+        sha256: 4197722b4c5ed42b476d42e29beb29a52b6b25c34ec7b4d589c3ae5145fee98e
         x-checker-data:
           type: anitya
           project-id: 6615
@@ -237,15 +238,17 @@ modules:
       - type: script
         dest-filename: inkscape.sh
         commands:
-          - flatpak-spawn --host flatpak info org.inkscape.Inkscape >/dev/null 2>/dev/null &&
-            exec flatpak-spawn --host flatpak run org.inkscape.Inkscape "$@" ||
-            exec flatpak-spawn --host flatpak run --command=zenity $FLATPAK_ID --error --text="Inkscape not installed!"
+          - flatpak-spawn --host flatpak info org.inkscape.Inkscape >/dev/null 2>/dev/null
+            && exec flatpak-spawn --host flatpak run org.inkscape.Inkscape "$@" ||
+            exec flatpak-spawn --host flatpak run --command=zenity $FLATPAK_ID --error
+            --text="Inkscape not installed!"
       - type: script
         dest-filename: blender.sh
         commands:
-          - INPUT_FILE="$(awk -F "=" '/app-path/ {print $2}' /.flatpak-info)${2:4}" &&
-            exec flatpak-spawn --host
-            flatpak run --filesystem=~/.local/share/flatpak --filesystem=/var/lib/flatpak org.blender.Blender -b ${INPUT_FILE} -P "$4"
+          - INPUT_FILE="$(awk -F "=" '/app-path/ {print $2}' /.flatpak-info)${2:4}"
+            && exec flatpak-spawn --host flatpak run --filesystem=~/.local/share/flatpak
+            --filesystem=/var/lib/flatpak org.blender.Blender -b ${INPUT_FILE} -P
+            "$4"
       - type: archive
         url: https://github.com/OpenShot/openshot-qt/archive/v3.3.0.tar.gz
         sha256: f5471eec94d59830ea58351b93e69d4c56b42874d927fbd6482f83b9bb545d4f
