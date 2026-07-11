@@ -247,7 +247,7 @@ modules:
             exec flatpak-spawn --host
             flatpak run --filesystem=~/.local/share/flatpak --filesystem=/var/lib/flatpak org.blender.Blender -b ${INPUT_FILE} -P "$4"
       - type: archive
-        url: https://github.com/OpenShot/openshot-qt/archive/v3.3.0.tar.gz
-        sha256: f5471eec94d59830ea58351b93e69d4c56b42874d927fbd6482f83b9bb545d4f
+        url: https://github.com/OpenShot/openshot-qt/archive/v3.5.1.tar.gz
+        sha256: 6e3bbca4ab81caf7941f6fc1edcaec2fe4b2989cce335eef095184566e1602d2
       - type: patch
         path: patches/openshot-appdata.patch
