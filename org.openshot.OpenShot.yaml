@@ -182,6 +182,7 @@ modules:
         url: https://github.com/protocolbuffers/protobuf/
         # This is the expected version.
         tag: v3.12.4
+        commit: c9d2bd2fc781fe67ebf306807b9b6edb4a0d2764
     cleanup:
       - /bin
 
