@@ -1,0 +1,13 @@
+diff --git a/usvg/src/fontdb.rs b/usvg/src/fontdb.rs
+index 0e61706..74d5c4d 100644
+--- a/usvg/src/fontdb.rs
++++ b/usvg/src/fontdb.rs
+@@ -489,7 +489,7 @@ impl ttf_parser::OutlineBuilder for PathBuilder {
+ #[cfg(all(unix, not(target_os = "macos")))]
+ fn load_all_fonts(fonts: &mut Vec<FontItem>) {
+     load_fonts_from("/usr/share/fonts/", fonts);
+-    load_fonts_from("/usr/local/share/fonts/", fonts);
++    load_fonts_from("/run/host/fonts/", fonts);
+ 
+     if let Ok(ref home) = std::env::var("HOME") {
+         let path = Path::new(home).join(".local/share/fonts");

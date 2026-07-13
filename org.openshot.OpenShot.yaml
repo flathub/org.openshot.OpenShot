@@ -113,11 +113,9 @@ modules:
       - type: archive
         url: https://github.com/RazrFalcon/resvg/releases/download/v0.9.1/resvg-0.9.1.tar.xz
         sha256: dd00841f0928c7106a6ee1ca761d7a61747d26a27038008a3568398136aa5b16
-      - type: shell
-        commands:
-          - sed -i 's|/usr/local/share/fonts/|/run/host/fonts/|' usvg/src/fontdb.rs
       - type: patch
         paths:
+          - patches/resvg-font-path.patch
           - patches/resvg-qt515.patch
           - patches/resvg-rust-191.patch
 
