@@ -188,6 +188,7 @@ modules:
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - -DENABLE_RUBY=0
+      - -DENABLE_OPENCV=ON
     cleanup:
       - /share/doc
     sources:
