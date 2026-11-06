@@ -193,8 +193,8 @@ modules:
       - /share/doc
     sources:
       - type: archive
-        url: https://github.com/OpenShot/libopenshot/archive/v1.0.0.tar.gz
-        sha256: 5c5f3790f6f70977f3573b9d039372d5b85bddc46f8944244a6225a79891acf2
+        url: https://github.com/OpenShot/libopenshot/archive/v1.1.1.tar.gz
+        sha256: c5d650629b4104ec4368a2e3c183482e07de3e342d78d1e26f1cb297f9973439
 
   - name: openshot-qt
     buildsystem: simple
